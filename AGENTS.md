@@ -65,20 +65,38 @@ For every public class/method, add a doc comment following the language's standa
 *(Replace this whole section when starting a new project with a different stack.)*
 
 ### Build & Generation Commands
-- Install dependencies: `flutter pub get`
-- Run build runner: `dart run build_runner build --delete-conflicting-outputs`
-- Watch build runner: `dart run build_runner watch --delete-conflicting-outputs`
-- Code analysis: `flutter analyze`
-- Run tests: `flutter test`
+| Command | Purpose |
+|---------|---------|
+| `flutter pub get` | Install dependencies |
+| `dart run build_runner build --delete-conflicting-outputs` | Generate Riverpod + Isar code |
+| `flutter gen-l10n` | Regenerate localization if ARB files changed |
+| `dart format --output=none --set-exit-if-changed lib test bin scripts` | Check formatting |
+| `flutter analyze` | Static analysis |
+| `dart run custom_lint` | Riverpod-specific lints — **separate from `flutter analyze`, do not skip** |
+| `flutter test` | Run tests (`--tags=golden` to run golden tests only) |
+| `bash before_push.sh` | Full pre-push pipeline |
 
 ### Architecture & Layer Boundaries
-This is a Local-First, AI-Native boilerplate utilizing Clean Architecture under a Feature-First approach, structured as:
-- **Domain Layer** (`lib/features/<feature>/domain/`): Pure Dart logic — entities, repository interfaces, use cases. NO Flutter or Riverpod imports allowed here.
-- **Data Layer** (`lib/features/<feature>/data/`): Repository implementations and local storage handlers utilizing `isar_community`.
+Feature-First Clean Architecture under `lib/features/<feature>/`. Two features currently exist: `todos` (CRUD with streams) and `settings` (singleton Isar collection, id=0). Global providers live under `lib/core/providers/`.
+
+- **Domain Layer** (`lib/features/<feature>/domain/`): Pure Dart — entities, repository interfaces, use cases. NO Flutter or Riverpod imports allowed here.
+- **Data Layer** (`lib/features/<feature>/data/`): Repository implementations, Isar models, and **synchronous** mappers (extensions).
 - **Presentation Layer** (`lib/features/<feature>/presentation/`): UI (`ConsumerWidget`) and state management via Riverpod 3.x generators (`@riverpod`).
 - **State Management:** Riverpod 3.x strictly.
 - **Data Flow:** UI (`ConsumerWidget`) -> Notifier (`@riverpod`) -> Repository Interface (domain) -> Repository Impl (data) -> Local DB (`isar_community`).
 - **Reactivity:** Handled purely via Isar streams. Notifiers listen to Isar collections and pipe data directly into `AsyncValue` state.
+
+### Riverpod 3.x + Isar Community Patterns (repo-specific)
+- **Always** use `@riverpod` code generation — never manual state mutation.
+- State is **stream-driven**: notifiers listen to Isar collections and pipe into `AsyncValue`. No manual `state = ...` in CRUD methods.
+- **I/O isolation:** mappers are synchronous, stateless extensions — they never execute I/O.
+- **Single source of truth:** screens subscribe by ID via `.family(id)` providers.
+- Use `isar_community` (not `isar`) — the original `isar` package conflicts with `riverpod_generator`.
+
+### Constraints
+- Dart 3.12+ features (records, patterns, class modifiers) replace Freezed/Equatable — do not introduce those packages as dependencies without flagging it first (per Dependency Changes above).
+- `custom_lint` rule `avoid_infrastructure_imports_in_presentation` enforces layer boundaries.
+- **Isar initialization:** Always use `Isar.getInstance() ?? await Isar.open(...)` to prevent dual-open errors.
 
 ### Lifecycle & Resource Disposal Checklist
 Before considering any feature involving streams, timers, or animations complete, verify:
@@ -86,10 +104,22 @@ Before considering any feature involving streams, timers, or animations complete
 - Every `Timer` or `AnimationController` is cancelled/disposed the same way to prevent memory leaks.
 - All Isar dynamic query streams are properly closed or managed via Riverpod's auto-dispose mechanism.
 
+### Testing Conventions
+- **Unit tests:** notifier state transitions, CRUD logic, subscription cancellation.
+- **Widget tests:** fake repositories injected via `ProviderContainer`.
+- **Golden tests:** tagged `golden` in `dart_test.yaml`. Run with `flutter test --tags=golden`.
+- **Fixtures:** `test/helpers/fake_todo_repository.dart`, `test/helpers/fake_user_preferences_repository.dart`.
+
+### Generated Files
+- `*.g.dart` files come from `build_runner` and are excluded from analysis (`analysis_options.yaml`).
+- `lib/l10n/` generated localization — run `flutter gen-l10n` if ARB files change.
+
 ### Mandatory Verification Pipeline
 After any modification within the `lib/**` directory, you MUST execute the following pipeline in strict order:
 1. `dart run build_runner build --delete-conflicting-outputs`
-2. `flutter analyze`
-3. `flutter test`
+2. `dart format --output=none --set-exit-if-changed lib test bin scripts`
+3. `flutter analyze`
+4. `dart run custom_lint`
+5. `flutter test`
 
 A task is NOT considered complete until all steps pass with zero errors and zero failing tests, AND the Lifecycle & Resource Disposal Checklist above has been explicitly verified. Fix any arising issues autonomously, subject to the Guardrails above.
