@@ -5,11 +5,17 @@ import 'features/settings/domain/entities/user_preferences.dart';
 import 'features/settings/presentation/providers/user_preferences_notifier.dart';
 import 'features/todos/presentation/screens/todo_screen.dart';
 
-/// Root widget that applies theme preferences and hosts the home screen.
+/// Root application widget configuring themes, navigation, and core Material3 setup.
+///
+/// Reactively subscribes to [userPreferencesProvider] to apply dark, light, or system
+/// theme modes dynamically.
 class App extends ConsumerWidget {
-  /// Creates an [App].
+  /// Creates a new root [App] widget instance.
   const App({super.key});
 
+  /// Builds the top-level [MaterialApp] with reactive theme configuration.
+  ///
+  /// Takes a build [context] and Riverpod widget [ref] to watch theme preferences.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(userPreferencesProvider).value;

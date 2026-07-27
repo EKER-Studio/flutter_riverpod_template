@@ -10,13 +10,12 @@ import 'core/providers/isar_provider.dart';
 import 'features/settings/data/models/user_preferences_model.dart';
 import 'features/todos/data/models/todo_model.dart';
 
-/// Initializes Isar and launches the app with injected dependencies.
+/// Main entrypoint function for the application.
 ///
-/// Wrapped in [runZonedGuarded] together with [FlutterError.onError] so that
-/// uncaught errors — both inside and outside the Flutter widget tree — are
-/// captured in one place instead of crashing silently in release mode. This
-/// is intentionally left as a single `debugPrint` hook: wire in your crash
-/// reporter of choice (e.g. Sentry, Firebase Crashlytics) here.
+/// Initializes Flutter bindings, sets up global error handling hooks via [runZonedGuarded],
+/// initializes the local [Isar] database, overrides [isarProvider], and launches [App].
+///
+/// Returns a [Future] completing when initial setup is finished.
 Future<void> main() async {
   runZonedGuarded(
     () async {
