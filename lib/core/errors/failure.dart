@@ -1,53 +1,51 @@
-/// Base class for all domain-level failures.
+/// Domain failure hierarchy for modeling domain and data layer error states.
 ///
-/// Subclasses represent specific categories of errors that can occur
-/// during repository operations, allowing the presentation layer to
-/// handle errors without depending on technical exception types.
+/// Provides abstract and concrete failure representations that decouple UI and business
+/// logic from technical database, network, or framework-specific exception details.
 sealed class Failure {
+  /// Abstract constructor for [Failure] taking a descriptive [message].
   const Failure(this.message);
 
-  /// A human-readable description of the failure.
+  /// A human-readable description of the failure for logging and diagnostic purposes.
   final String message;
 }
 
-/// Failure originating from a database operation.
+/// Failure originating from a local database or persistence operation.
 class DatabaseFailure extends Failure {
-  /// Creates a [DatabaseFailure] with the given [message].
+  /// Creates a [DatabaseFailure] with the given error [message].
   const DatabaseFailure(super.message);
 }
 
-/// Failure originating from a network operation.
+/// Failure originating from a remote network or API communication operation.
 class NetworkFailure extends Failure {
-  /// Creates a [NetworkFailure] with the given [message].
+  /// Creates a [NetworkFailure] with the given error [message].
   const NetworkFailure(super.message);
 }
 
-/// Failure indicating that a requested resource was not found.
+/// Failure indicating that a requested domain resource or entity was not found.
 class NotFoundFailure extends Failure {
-  /// Creates a [NotFoundFailure] with the given [message].
+  /// Creates a [NotFoundFailure] with the given error [message].
   const NotFoundFailure(super.message);
 }
 
-/// Failure when input validation fails.
+/// Failure occurring when domain rules or user input validation checks fail.
 class ValidationFailure extends Failure {
-  /// Creates a [ValidationFailure] with the given [message].
+  /// Creates a [ValidationFailure] with the given validation error [message].
   const ValidationFailure(super.message);
 }
 
-/// Catch-all failure for unexpected or unclassified errors.
+/// Catch-all failure representation for unclassified or unexpected error states.
 class UnknownFailure extends Failure {
-  /// Creates an [UnknownFailure] with the given [message].
+  /// Creates an [UnknownFailure] with the given error [message].
   const UnknownFailure(super.message);
 }
 
-/// Maps each [Failure] to text that is safe to show directly to end users.
+/// Extension mapping domain [Failure] instances to localized or user-safe strings.
 ///
-/// [Failure.message] may contain raw exception text (useful for logs/crash
-/// reports) — this extension hides that behind a stable, friendly string per
-/// failure category. [ValidationFailure] is the one exception: validation
-/// messages are already written to be user-facing, so they pass through.
+/// Hides raw exception details stored in [Failure.message] behind stable, user-friendly
+/// strings, with the exception of [ValidationFailure] whose messages are explicitly user-facing.
 extension FailureUserMessage on Failure {
-  /// A human-readable message safe to display in UI.
+  /// A human-readable error message formatted for safe UI presentation.
   String get userMessage => switch (this) {
     ValidationFailure(:final message) => message,
     NotFoundFailure() => 'This item no longer exists.',

@@ -2,19 +2,22 @@ import 'package:isar_community/isar.dart';
 
 part 'todo_model.g.dart';
 
-/// Persistent representation of a [Todo] domain entity.
+/// Persistent Isar database collection model for storing todo items.
+///
+/// Serves strictly as a data-layer DTO directly mapped to local storage tables,
+/// transformed to and from the domain entity `Todo` using mapper extensions.
 @collection
 class TodoModel {
-  /// The unique identifier.
+  /// The unique auto-incrementing primary key identifier for the todo record.
   Id id = Isar.autoIncrement;
 
-  /// The title of the todo.
+  /// The title or descriptive text of the todo item.
   late String title;
 
-  /// Whether the todo is completed.
+  /// Indicates whether the todo item has been completed.
   bool isCompleted = false;
 
-  /// The date and time when the todo was created.
+  /// The timestamp when the todo item was created, indexed for sorted query retrieval.
   @Index()
   late DateTime createdAt;
 }

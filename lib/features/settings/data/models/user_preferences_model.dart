@@ -2,18 +2,21 @@ import 'package:isar_community/isar.dart';
 
 part 'user_preferences_model.g.dart';
 
-/// The default ID used for the user preferences singleton.
+/// The default fixed primary key ID used for persisting the single [UserPreferencesModel] record.
 const userPreferencesSingletonId = 0;
 
-/// Persistent representation of [UserPreferences].
+/// Persistent Isar database collection model for application user preferences.
+///
+/// Functions as a single-row (singleton) collection storing theme and notification preferences,
+/// mapped synchronously to and from domain `UserPreferences` entities.
 @collection
 class UserPreferencesModel {
-  /// The singleton ID for user preferences.
+  /// The fixed singleton identifier for accessing user preference settings in Isar storage.
   Id id = userPreferencesSingletonId;
 
-  /// The selected theme mode as a string.
+  /// The persisted theme mode preference serialized as a raw String name.
   late String themeMode;
 
-  /// Whether notifications are enabled.
+  /// Indicates whether push or local notifications are enabled by the user.
   bool isNotificationsEnabled = true;
 }
