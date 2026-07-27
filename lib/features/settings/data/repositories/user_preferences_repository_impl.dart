@@ -6,9 +6,12 @@ import '../../domain/repositories/user_preferences_repository.dart';
 import '../mappers/user_preferences_mapper.dart';
 import '../models/user_preferences_model.dart';
 
-/// Implementation of [UserPreferencesRepository] using Isar.
+/// Concrete implementation of [UserPreferencesRepository] backed by Isar storage.
+///
+/// Manages singleton user settings state in Isar database transactions and converts
+/// raw storage models to domain [UserPreferences] entities.
 class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
-  /// Creates a new [UserPreferencesRepositoryImpl] with the given Isar instance.
+  /// Creates a new [UserPreferencesRepositoryImpl] with the provided [_isar] database instance.
   UserPreferencesRepositoryImpl(this._isar);
 
   final Isar _isar;
@@ -31,6 +34,12 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
     return model;
   }
 
+  /// Watches for updates to the singleton user preferences object.
+  ///
+  /// Emits a continuous [Stream] containing updated [UserPreferences] whenever the underlying
+  /// user preferences record changes in Isar storage.
+  ///
+  /// Throws [DatabaseFailure] if a database watch stream error occurs.
   @override
   Stream<UserPreferences> watch() {
     return _isar.userPreferencesModels
@@ -43,6 +52,11 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
         });
   }
 
+  /// Fetches the current user preferences snapshot.
+  ///
+  /// Returns a [Future] completing with the current [UserPreferences] entity.
+  ///
+  /// Throws [DatabaseFailure] if reading user preferences from storage fails.
   @override
   Future<UserPreferences> get() async {
     try {
@@ -55,6 +69,10 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
     }
   }
 
+  /// Updates the application theme setting to [themeMode].
+  ///
+  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
+  /// indicating whether updating preferences succeeded or returning a [DatabaseFailure] on error.
   @override
   Future<(bool success, Failure? failure)> updateThemeMode(
     UserThemeMode themeMode,
@@ -73,6 +91,10 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
     }
   }
 
+  /// Updates whether application notifications are enabled to [isEnabled].
+  ///
+  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
+  /// indicating whether updating preferences succeeded or returning a [DatabaseFailure] on error.
   @override
   Future<(bool success, Failure? failure)> updateNotificationsEnabled(
     bool isEnabled,

@@ -6,13 +6,22 @@ import '../../domain/repositories/todo_repository.dart';
 import '../mappers/todo_mapper.dart';
 import '../models/todo_model.dart';
 
-/// Default implementation of [TodoRepository] backed by Isar.
+/// Concrete implementation of [TodoRepository] using Isar database for local persistence.
+///
+/// Encapsulates all Isar database transactions, query subscriptions, and data mapping logic
+/// for todo item storage operations.
 class TodoRepositoryImpl implements TodoRepository {
-  /// Creates a new [TodoRepositoryImpl] with the given Isar instance.
+  /// Creates a new [TodoRepositoryImpl] with the provided [_isar] database instance.
   TodoRepositoryImpl(this._isar);
 
   final Isar _isar;
 
+  /// Watches all todo items stored in the Isar database.
+  ///
+  /// Emits a continuous [Stream] emitting the complete list of [Todo] entities ordered
+  /// by creation date descending whenever the todo collection changes.
+  ///
+  /// Throws [DatabaseFailure] if a database query error occurs while watching.
   @override
   Stream<List<Todo>> watchAll() {
     return _isar.todoModels
@@ -25,6 +34,12 @@ class TodoRepositoryImpl implements TodoRepository {
         });
   }
 
+  /// Watches a specific todo item identified by [id].
+  ///
+  /// Emits a continuous [Stream] emitting the matching [Todo] entity (or `null` if deleted)
+  /// whenever the record matching [id] changes.
+  ///
+  /// Throws [DatabaseFailure] if a database query error occurs while watching.
   @override
   Stream<Todo?> watchById(int id) {
     return _isar.todoModels
@@ -37,6 +52,11 @@ class TodoRepositoryImpl implements TodoRepository {
         });
   }
 
+  /// Retrieves a snapshot of all todo items stored in the database.
+  ///
+  /// Returns a [Future] completing with a list of all [Todo] entities ordered by creation date descending.
+  ///
+  /// Throws [DatabaseFailure] if a database reading error occurs.
   @override
   Future<List<Todo>> getAll() async {
     try {
@@ -50,6 +70,10 @@ class TodoRepositoryImpl implements TodoRepository {
     }
   }
 
+  /// Adds a new todo item with the given [title].
+  ///
+  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
+  /// indicating whether database insertion succeeded or returning a [DatabaseFailure] on error.
   @override
   Future<(bool success, Failure? failure)> add({required String title}) async {
     try {
@@ -68,6 +92,11 @@ class TodoRepositoryImpl implements TodoRepository {
     }
   }
 
+  /// Toggles the completion status of a todo item identified by [id].
+  ///
+  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
+  /// containing `true` if updated, or returning a [NotFoundFailure] if [id] does not exist
+  /// or [DatabaseFailure] if a storage error occurs.
   @override
   Future<(bool success, Failure? failure)> toggleCompleted({
     required int id,
@@ -95,6 +124,10 @@ class TodoRepositoryImpl implements TodoRepository {
     }
   }
 
+  /// Deletes a todo item identified by [id] from Isar storage.
+  ///
+  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
+  /// indicating whether deletion succeeded or returning a [DatabaseFailure] on error.
   @override
   Future<(bool success, Failure? failure)> delete({required int id}) async {
     try {
@@ -109,6 +142,10 @@ class TodoRepositoryImpl implements TodoRepository {
     }
   }
 
+  /// Restores a previously deleted [todo] entity to the database.
+  ///
+  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
+  /// indicating whether restoration succeeded or returning a [DatabaseFailure] on error.
   @override
   Future<(bool success, Failure? failure)> restore(Todo todo) async {
     try {
