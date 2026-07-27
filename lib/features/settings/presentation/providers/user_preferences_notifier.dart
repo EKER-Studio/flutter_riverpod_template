@@ -8,16 +8,25 @@ import 'user_preferences_repository_provider.dart';
 
 part 'user_preferences_notifier.g.dart';
 
-/// Notifier for managing user preferences state.
+/// Riverpod state notifier managing the application's user preferences state.
+///
+/// Watches [UserPreferencesRepository.watch] for live settings changes and provides
+/// methods to update theme modes and notification flags.
 @riverpod
 class UserPreferencesNotifier extends _$UserPreferencesNotifier {
+  /// Initializes the notifier by watching user preferences from [userPreferencesRepositoryProvider].
+  ///
+  /// Returns a continuous [Stream] emitting updated [UserPreferences] entities whenever settings change.
   @override
   Stream<UserPreferences> build() {
     final repository = ref.watch(userPreferencesRepositoryProvider);
     return repository.watch();
   }
 
-  /// Updates the user's selected theme mode.
+  /// Updates the application theme mode to [themeMode].
+  ///
+  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
+  /// indicating whether the theme update succeeded.
   Future<(bool success, Failure? failure)> updateThemeMode(
     UserThemeMode themeMode,
   ) async {
@@ -26,7 +35,10 @@ class UserPreferencesNotifier extends _$UserPreferencesNotifier {
         .updateThemeMode(themeMode);
   }
 
-  /// Updates the user's notification preferences.
+  /// Updates the user's notification preference flag to [isEnabled].
+  ///
+  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
+  /// indicating whether the preference update succeeded.
   Future<(bool success, Failure? failure)> updateNotificationsEnabled(
     bool isEnabled,
   ) async {

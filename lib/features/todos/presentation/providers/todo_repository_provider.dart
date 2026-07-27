@@ -6,7 +6,10 @@ import '../../domain/repositories/todo_repository.dart';
 
 part 'todo_repository_provider.g.dart';
 
-/// Provider for the [TodoRepository].
+/// Provides a persistent singleton instance of [TodoRepository] backed by Isar.
+///
+/// Takes a [ref] to read the global [isarProvider] dependency.
+/// Returns the concrete [TodoRepositoryImpl] implementation for todo data operations.
 @Riverpod(keepAlive: true)
 TodoRepository todoRepository(Ref ref) {
   return TodoRepositoryImpl(ref.watch(isarProvider));

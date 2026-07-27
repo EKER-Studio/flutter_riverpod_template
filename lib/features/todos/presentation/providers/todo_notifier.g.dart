@@ -8,15 +8,24 @@ part of 'todo_notifier.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Notifier for managing the list of todo items.
+/// Riverpod state notifier managing the reactive stream of todo items.
+///
+/// Listens directly to [TodoRepository.watchAll] streams and exposes UI state actions
+/// for creating, toggling, deleting, and restoring todo entities.
 
 @ProviderFor(TodoList)
 final todoListProvider = TodoListProvider._();
 
-/// Notifier for managing the list of todo items.
+/// Riverpod state notifier managing the reactive stream of todo items.
+///
+/// Listens directly to [TodoRepository.watchAll] streams and exposes UI state actions
+/// for creating, toggling, deleting, and restoring todo entities.
 final class TodoListProvider
     extends $StreamNotifierProvider<TodoList, List<Todo>> {
-  /// Notifier for managing the list of todo items.
+  /// Riverpod state notifier managing the reactive stream of todo items.
+  ///
+  /// Listens directly to [TodoRepository.watchAll] streams and exposes UI state actions
+  /// for creating, toggling, deleting, and restoring todo entities.
   TodoListProvider._()
     : super(
         from: null,
@@ -38,7 +47,10 @@ final class TodoListProvider
 
 String _$todoListHash() => r'1bbd603088278555f2edd4b6cc7b7310762e29a2';
 
-/// Notifier for managing the list of todo items.
+/// Riverpod state notifier managing the reactive stream of todo items.
+///
+/// Listens directly to [TodoRepository.watchAll] streams and exposes UI state actions
+/// for creating, toggling, deleting, and restoring todo entities.
 
 abstract class _$TodoList extends $StreamNotifier<List<Todo>> {
   Stream<List<Todo>> build();

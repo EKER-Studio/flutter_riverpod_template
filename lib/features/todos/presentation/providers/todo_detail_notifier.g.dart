@@ -8,15 +8,21 @@ part of 'todo_detail_notifier.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Notifier for managing the state of a single todo item.
+/// Riverpod family state notifier managing state for a single todo item identified by its ID.
+///
+/// Subscribes directly to [TodoRepository.watchById] for live single-item UI updates.
 
 @ProviderFor(TodoDetail)
 final todoDetailProvider = TodoDetailFamily._();
 
-/// Notifier for managing the state of a single todo item.
+/// Riverpod family state notifier managing state for a single todo item identified by its ID.
+///
+/// Subscribes directly to [TodoRepository.watchById] for live single-item UI updates.
 final class TodoDetailProvider
     extends $StreamNotifierProvider<TodoDetail, Todo?> {
-  /// Notifier for managing the state of a single todo item.
+  /// Riverpod family state notifier managing state for a single todo item identified by its ID.
+  ///
+  /// Subscribes directly to [TodoRepository.watchById] for live single-item UI updates.
   TodoDetailProvider._({
     required TodoDetailFamily super.from,
     required int super.argument,
@@ -55,7 +61,9 @@ final class TodoDetailProvider
 
 String _$todoDetailHash() => r'b31202548e5c4b10f5c7a59c98f7ea91a1c09b16';
 
-/// Notifier for managing the state of a single todo item.
+/// Riverpod family state notifier managing state for a single todo item identified by its ID.
+///
+/// Subscribes directly to [TodoRepository.watchById] for live single-item UI updates.
 
 final class TodoDetailFamily extends $Family
     with
@@ -75,7 +83,9 @@ final class TodoDetailFamily extends $Family
         isAutoDispose: true,
       );
 
-  /// Notifier for managing the state of a single todo item.
+  /// Riverpod family state notifier managing state for a single todo item identified by its ID.
+  ///
+  /// Subscribes directly to [TodoRepository.watchById] for live single-item UI updates.
 
   TodoDetailProvider call(int id) =>
       TodoDetailProvider._(argument: id, from: this);
@@ -84,7 +94,9 @@ final class TodoDetailFamily extends $Family
   String toString() => r'todoDetailProvider';
 }
 
-/// Notifier for managing the state of a single todo item.
+/// Riverpod family state notifier managing state for a single todo item identified by its ID.
+///
+/// Subscribes directly to [TodoRepository.watchById] for live single-item UI updates.
 
 abstract class _$TodoDetail extends $StreamNotifier<Todo?> {
   late final _$args = ref.$arg as int;

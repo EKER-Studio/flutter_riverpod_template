@@ -8,15 +8,24 @@ part of 'user_preferences_notifier.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Notifier for managing user preferences state.
+/// Riverpod state notifier managing the application's user preferences state.
+///
+/// Watches [UserPreferencesRepository.watch] for live settings changes and provides
+/// methods to update theme modes and notification flags.
 
 @ProviderFor(UserPreferencesNotifier)
 final userPreferencesProvider = UserPreferencesNotifierProvider._();
 
-/// Notifier for managing user preferences state.
+/// Riverpod state notifier managing the application's user preferences state.
+///
+/// Watches [UserPreferencesRepository.watch] for live settings changes and provides
+/// methods to update theme modes and notification flags.
 final class UserPreferencesNotifierProvider
     extends $StreamNotifierProvider<UserPreferencesNotifier, UserPreferences> {
-  /// Notifier for managing user preferences state.
+  /// Riverpod state notifier managing the application's user preferences state.
+  ///
+  /// Watches [UserPreferencesRepository.watch] for live settings changes and provides
+  /// methods to update theme modes and notification flags.
   UserPreferencesNotifierProvider._()
     : super(
         from: null,
@@ -39,7 +48,10 @@ final class UserPreferencesNotifierProvider
 String _$userPreferencesNotifierHash() =>
     r'2d70fa08f6b7bd66c5d0841adbf25594fdec3976';
 
-/// Notifier for managing user preferences state.
+/// Riverpod state notifier managing the application's user preferences state.
+///
+/// Watches [UserPreferencesRepository.watch] for live settings changes and provides
+/// methods to update theme modes and notification flags.
 
 abstract class _$UserPreferencesNotifier
     extends $StreamNotifier<UserPreferences> {

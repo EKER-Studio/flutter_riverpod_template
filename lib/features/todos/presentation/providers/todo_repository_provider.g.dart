@@ -8,17 +8,26 @@ part of 'todo_repository_provider.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Provider for the [TodoRepository].
+/// Provides a persistent singleton instance of [TodoRepository] backed by Isar.
+///
+/// Takes a [ref] to read the global [isarProvider] dependency.
+/// Returns the concrete [TodoRepositoryImpl] implementation for todo data operations.
 
 @ProviderFor(todoRepository)
 final todoRepositoryProvider = TodoRepositoryProvider._();
 
-/// Provider for the [TodoRepository].
+/// Provides a persistent singleton instance of [TodoRepository] backed by Isar.
+///
+/// Takes a [ref] to read the global [isarProvider] dependency.
+/// Returns the concrete [TodoRepositoryImpl] implementation for todo data operations.
 
 final class TodoRepositoryProvider
     extends $FunctionalProvider<TodoRepository, TodoRepository, TodoRepository>
     with $Provider<TodoRepository> {
-  /// Provider for the [TodoRepository].
+  /// Provides a persistent singleton instance of [TodoRepository] backed by Isar.
+  ///
+  /// Takes a [ref] to read the global [isarProvider] dependency.
+  /// Returns the concrete [TodoRepositoryImpl] implementation for todo data operations.
   TodoRepositoryProvider._()
     : super(
         from: null,
