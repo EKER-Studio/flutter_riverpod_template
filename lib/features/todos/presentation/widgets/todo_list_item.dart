@@ -4,9 +4,12 @@ import 'package:intl/intl.dart';
 import '../../domain/entities/todo.dart';
 import '../screens/todo_screen_detail.dart';
 
-/// List item widget displaying a todo item.
+/// Reusable list tile component rendering a single todo item within a dismissible list.
+///
+/// Features interactive checkbox toggling, swipe-to-delete dismissal, and tap navigation
+/// to the detail screen for the given [todo].
 class TodoListItem extends StatelessWidget {
-  /// Creates a [TodoListItem].
+  /// Creates a [TodoListItem] widget for the given [todo] with [onToggle] and [onDelete] callbacks.
   const TodoListItem({
     super.key,
     required this.todo,
@@ -14,15 +17,18 @@ class TodoListItem extends StatelessWidget {
     required this.onDelete,
   });
 
-  /// The todo item to display.
+  /// The domain [Todo] entity represented by this list item.
   final Todo todo;
 
-  /// Callback to execute when the todo is toggled.
+  /// Callback executed when the checkbox state is toggled by the user.
   final VoidCallback onToggle;
 
-  /// Callback to execute when the todo is deleted.
+  /// Callback executed when the item is swiped away to be deleted.
   final VoidCallback onDelete;
 
+  /// Builds the dismissible list tile widget.
+  ///
+  /// Takes the widget build [context].
   @override
   Widget build(BuildContext context) {
     return Dismissible(

@@ -5,14 +5,20 @@ import 'package:intl/intl.dart';
 import '../../../../core/errors/failure.dart';
 import '../providers/todo_detail_notifier.dart';
 
-/// Screen displaying the details of a single todo item.
+/// Presentation widget rendering detailed information for a single todo item.
+///
+/// Watches [todoDetailProvider] for the target [todoId] and displays completion status
+/// and formatted creation timestamps.
 class TodoDetailScreen extends ConsumerWidget {
-  /// Creates a [TodoDetailScreen].
+  /// Creates a [TodoDetailScreen] widget targeting the specified [todoId].
   const TodoDetailScreen({super.key, required this.todoId});
 
-  /// The ID of the todo item to display.
+  /// The unique identifier of the target todo item to display.
   final int todoId;
 
+  /// Builds the detail screen layout corresponding to the current state of [todoId].
+  ///
+  /// Takes a build [context] and Riverpod widget [ref] to watch state changes.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todoAsync = ref.watch(todoDetailProvider(todoId));

@@ -5,11 +5,17 @@ import '../../../../core/errors/failure.dart';
 import '../../domain/entities/user_preferences.dart';
 import '../providers/user_preferences_notifier.dart';
 
-/// Screen displaying user settings and preferences.
+/// Presentation widget rendering the user preferences and settings screen.
+///
+/// Displays theme mode selectors and notification switches, allowing users to modify
+/// application settings backed by [userPreferencesProvider].
 class SettingsScreen extends ConsumerWidget {
-  /// Creates a [SettingsScreen].
+  /// Creates a new [SettingsScreen] widget instance.
   const SettingsScreen({super.key});
 
+  /// Builds the settings screen layout displaying controls for theme mode and notifications.
+  ///
+  /// Takes a build [context] and Riverpod widget [ref] to listen for preference state changes.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferencesAsync = ref.watch(userPreferencesProvider);

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-/// Floating action button for adding a new todo item.
+/// Floating action button triggering a modal dialog to create a new todo item.
 class AddTodoFab extends StatelessWidget {
-  /// Creates an [AddTodoFab].
+  /// Creates an [AddTodoFab] widget with the given [onAdd] completion callback.
   const AddTodoFab({super.key, required this.onAdd});
 
-  /// Callback to execute when a new todo is added.
+  /// Async callback executed when a new todo title is submitted from the dialog.
+  ///
+  /// Receives the user-entered task title string.
   final Future<void> Function(String title) onAdd;
 
   Future<void> _showAddDialog(BuildContext context) async {
@@ -19,6 +21,9 @@ class AddTodoFab extends StatelessWidget {
     }
   }
 
+  /// Builds the floating action button widget.
+  ///
+  /// Takes the widget build [context].
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
