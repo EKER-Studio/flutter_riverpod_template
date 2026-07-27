@@ -1,24 +1,27 @@
-/// Supported application theme modes.
+/// Domain-level enum representing supported application display theme modes.
 enum UserThemeMode {
-  /// Light theme.
+  /// Always force light theme mode regardless of system settings.
   light,
 
-  /// Dark theme.
+  /// Always force dark theme mode regardless of system settings.
   dark,
 
-  /// System default theme.
+  /// Automatically follow the host operating system's active theme setting.
   system,
 }
 
-/// Domain entity representing user preferences.
+/// Domain entity representing user-configurable application preferences.
+///
+/// Encapsulates preferences such as theme selection and notification toggles,
+/// keeping domain business rules completely independent of persistence layers.
 class UserPreferences {
-  /// Creates a [UserPreferences] instance.
+  /// Creates a [UserPreferences] instance with the specified [themeMode] and [isNotificationsEnabled] settings.
   const UserPreferences({
     required this.themeMode,
     required this.isNotificationsEnabled,
   });
 
-  /// Creates default user preferences.
+  /// Creates default [UserPreferences] configured with [UserThemeMode.system] and notifications enabled.
   factory UserPreferences.defaults() {
     return const UserPreferences(
       themeMode: UserThemeMode.system,
@@ -26,13 +29,16 @@ class UserPreferences {
     );
   }
 
-  /// The selected theme mode.
+  /// The active theme mode preference.
   final UserThemeMode themeMode;
 
-  /// Whether notifications are enabled.
+  /// Indicates whether push or local notifications are enabled by the user.
   final bool isNotificationsEnabled;
 
-  /// Creates a copy of this object with the given fields replaced with the new values.
+  /// Creates a copy of this [UserPreferences] instance with specified fields replaced.
+  ///
+  /// Optional parameters [themeMode] and [isNotificationsEnabled] override existing
+  /// preference values if provided.
   UserPreferences copyWith({
     UserThemeMode? themeMode,
     bool? isNotificationsEnabled,
@@ -44,6 +50,7 @@ class UserPreferences {
     );
   }
 
+  /// Determines equality between this [UserPreferences] instance and [other].
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
@@ -52,6 +59,7 @@ class UserPreferences {
             other.isNotificationsEnabled == isNotificationsEnabled;
   }
 
+  /// Computes the hash code based on [themeMode] and [isNotificationsEnabled].
   @override
   int get hashCode => Object.hash(themeMode, isNotificationsEnabled);
 }
