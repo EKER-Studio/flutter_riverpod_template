@@ -57,5 +57,8 @@ jobs:
       - name: Static analysis
         run: flutter analyze
 
+      - name: Run Riverpod Custom Linters
+        run: dart run custom_lint
+
       - name: Run unit and widget tests
         run: flutter test --exclude-tags golden

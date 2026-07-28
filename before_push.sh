@@ -76,6 +76,7 @@ log_step "5" "Executing static analysis (Linter)..."
 # ------------------------------------------------------------------------------
 # Evaluates project architecture against analysis_options.yaml rules
 flutter analyze
+dart run custom_lint
 log_success "Static analysis passed with zero warnings or errors."
 
 # ------------------------------------------------------------------------------
