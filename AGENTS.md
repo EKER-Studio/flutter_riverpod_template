@@ -95,7 +95,7 @@ Feature-First Clean Architecture under `lib/features/<feature>/`. Two features c
 
 ### Constraints
 - Dart 3.12+ features (records, patterns, class modifiers) replace Freezed/Equatable — do not introduce those packages as dependencies without flagging it first (per Dependency Changes above).
-- `custom_lint` rule `avoid_infrastructure_imports_in_presentation` enforces layer boundaries.
+- Layer boundaries (no infrastructure imports in `presentation/`) are enforced by code review only for now — a `custom_lint` rule for this is planned but not yet implemented (see `analysis_options.yaml`).
 - **Isar initialization:** Always use `Isar.getInstance() ?? await Isar.open(...)` to prevent dual-open errors.
 
 ### Lifecycle & Resource Disposal Checklist
