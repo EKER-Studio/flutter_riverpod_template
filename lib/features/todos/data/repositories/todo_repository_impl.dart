@@ -95,8 +95,8 @@ class TodoRepositoryImpl implements TodoRepository {
   /// Toggles the completion status of a todo item identified by [id].
   ///
   /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// containing `true` if updated, or returning a [NotFoundFailure] if [id] does not exist
-  /// or [DatabaseFailure] if a storage error occurs.
+  /// containing `true` if updated, or returning a [DatabaseFailure] if [id] does not exist
+  /// or a storage error occurs.
   @override
   Future<(bool success, Failure? failure)> toggleCompleted({
     required int id,
@@ -114,7 +114,7 @@ class TodoRepositoryImpl implements TodoRepository {
         await _isar.todoModels.put(model);
       });
       if (!found) {
-        return (false, NotFoundFailure('Todo not found'));
+        return (false, const DatabaseFailure('Todo not found'));
       }
       return (true, null);
     } on IsarError catch (e) {
@@ -133,30 +133,6 @@ class TodoRepositoryImpl implements TodoRepository {
     try {
       await _isar.writeTxn(() async {
         await _isar.todoModels.delete(id);
-      });
-      return (true, null);
-    } on IsarError catch (e) {
-      return (false, DatabaseFailure(e.message));
-    } catch (e) {
-      return (false, DatabaseFailure('Unexpected error: ${e.toString()}'));
-    }
-  }
-
-  /// Restores a previously deleted [todo] entity to the database.
-  ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether restoration succeeded or returning a [DatabaseFailure] on error.
-  @override
-  Future<(bool success, Failure? failure)> restore(Todo todo) async {
-    try {
-      final model = TodoModel()
-        ..id = todo.id
-        ..title = todo.title
-        ..isCompleted = todo.isCompleted
-        ..createdAt = todo.createdAt;
-
-      await _isar.writeTxn(() async {
-        await _isar.todoModels.put(model);
       });
       return (true, null);
     } on IsarError catch (e) {

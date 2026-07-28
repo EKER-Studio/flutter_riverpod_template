@@ -179,12 +179,12 @@ void main() {
 
         final (success1, failure1) = await notifier.addTodo('');
         expect(success1, isFalse);
-        expect(failure1, isA<ValidationFailure>());
+        expect(failure1, isA<DatabaseFailure>());
         expect(failure1?.message, 'Title cannot be empty');
 
         final (success2, failure2) = await notifier.addTodo('   ');
         expect(success2, isFalse);
-        expect(failure2, isA<ValidationFailure>());
+        expect(failure2, isA<DatabaseFailure>());
         expect(failure2?.message, 'Title cannot be empty');
 
         verifyNever(() => mockRepo.add(title: any(named: 'title')));
@@ -295,53 +295,6 @@ void main() {
         final (success, failure) = await container
             .read(todoListProvider.notifier)
             .deleteTodo(_tId);
-
-        expect(success, isFalse);
-        expect(failure, isA<DatabaseFailure>());
-        expect(failure?.message, 'Database error');
-        expect(container.read(todoListProvider), isA<AsyncData<List<Todo>>>());
-      },
-    );
-  });
-
-  group('TodoList Notifier - restoreTodo()', () {
-    setUp(() {
-      when(() => mockRepo.watchAll()).thenAnswer((_) => Stream.value(_tTodos));
-    });
-
-    test('calls repository.restore with the given todo', () async {
-      final restoredTodo = _tTodos.first;
-      when(
-        () => mockRepo.restore(restoredTodo),
-      ).thenAnswer((_) async => (true, null));
-      container = _makeContainer(mockRepo);
-      container.listen(todoListProvider, (_, _) {});
-      await container.read(todoListProvider.future);
-
-      final (success, failure) = await container
-          .read(todoListProvider.notifier)
-          .restoreTodo(restoredTodo);
-
-      expect(success, isTrue);
-      expect(failure, isNull);
-      verify(() => mockRepo.restore(restoredTodo)).called(1);
-    });
-
-    test(
-      'returns error record when repository.restore fails and state remains AsyncData',
-      () async {
-        final restoredTodo = _tTodos.first;
-        when(
-          () => mockRepo.restore(restoredTodo),
-        ).thenAnswer((_) async => (false, DatabaseFailure('Database error')));
-
-        container = _makeContainer(mockRepo);
-        container.listen(todoListProvider, (_, _) {});
-        await container.read(todoListProvider.future);
-
-        final (success, failure) = await container
-            .read(todoListProvider.notifier)
-            .restoreTodo(restoredTodo);
 
         expect(success, isFalse);
         expect(failure, isA<DatabaseFailure>());

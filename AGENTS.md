@@ -62,17 +62,16 @@ For every public class/method, add a doc comment following the language's standa
 ---
 
 ## Project Stack: flutter_riverpod_boilerplate
-*(Replace this whole section when starting a new project with a different stack.)*
+*(Built strictly on 3 pillars: Clean Architecture, Riverpod 3.x, and Isar Community.)*
 
 ### Build & Generation Commands
 | Command | Purpose |
 |---------|---------|
 | `flutter pub get` | Install dependencies |
-| `dart run build_runner build --delete-conflicting-outputs` | Generate Riverpod + Isar code |
 | `flutter gen-l10n` | Regenerate localization if ARB files changed |
-| `dart format --output=none --set-exit-if-changed lib test bin scripts` | Check formatting |
+| `dart run build_runner build --delete-conflicting-outputs` | Generate Riverpod + Isar code |
+| `dart format --output=none --set-exit-if-changed lib test` | Check formatting |
 | `flutter analyze` | Static analysis |
-| `dart run custom_lint` | Riverpod-specific lints — **separate from `flutter analyze`, do not skip** |
 | `flutter test` | Run tests (`--tags=golden` to run golden tests only) |
 | `bash before_push.sh` | Full pre-push pipeline |
 
@@ -95,7 +94,6 @@ Feature-First Clean Architecture under `lib/features/<feature>/`. Two features c
 
 ### Constraints
 - Dart 3.12+ features (records, patterns, class modifiers) replace Freezed/Equatable — do not introduce those packages as dependencies without flagging it first (per Dependency Changes above).
-- Layer boundaries (no infrastructure imports in `presentation/`) are enforced by code review only for now — a `custom_lint` rule for this is planned but not yet implemented (see `analysis_options.yaml`).
 - **Isar initialization:** Always use `Isar.getInstance() ?? await Isar.open(...)` to prevent dual-open errors.
 
 ### Lifecycle & Resource Disposal Checklist
@@ -112,14 +110,12 @@ Before considering any feature involving streams, timers, or animations complete
 
 ### Generated Files
 - `*.g.dart` files come from `build_runner` and are excluded from analysis (`analysis_options.yaml`).
-- `lib/l10n/` generated localization — run `flutter gen-l10n` if ARB files change.
 
 ### Mandatory Verification Pipeline
 After any modification within the `lib/**` directory, you MUST execute the following pipeline in strict order:
 1. `dart run build_runner build --delete-conflicting-outputs`
 2. `dart format --output=none --set-exit-if-changed lib test bin scripts`
 3. `flutter analyze`
-4. `dart run custom_lint`
-5. `flutter test`
+4. `flutter test`
 
 A task is NOT considered complete until all steps pass with zero errors and zero failing tests, AND the Lifecycle & Resource Disposal Checklist above has been explicitly verified. Fix any arising issues autonomously, subject to the Guardrails above.

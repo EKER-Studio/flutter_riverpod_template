@@ -11,7 +11,7 @@ part 'todo_notifier.g.dart';
 /// Riverpod state notifier managing the reactive stream of todo items.
 ///
 /// Listens directly to [TodoRepository.watchAll] streams and exposes UI state actions
-/// for creating, toggling, deleting, and restoring todo entities.
+/// for creating, toggling, and deleting todo entities.
 @riverpod
 class TodoList extends _$TodoList {
   /// Initializes the notifier by watching all todo items from [todoRepositoryProvider].
@@ -26,12 +26,12 @@ class TodoList extends _$TodoList {
   /// Adds a new todo item with the given [title].
   ///
   /// Trims whitespace from [title] before calling the repository. Returns a [Future] completing
-  /// with a tuple `(bool success, Failure? failure)` containing `(false, ValidationFailure)`
+  /// with a tuple `(bool success, Failure? failure)` containing `(false, DatabaseFailure)`
   /// if [title] is empty or whitespace-only.
   Future<(bool success, Failure? failure)> addTodo(String title) async {
     final trimmedTitle = title.trim();
     if (trimmedTitle.isEmpty) {
-      return (false, ValidationFailure('Title cannot be empty'));
+      return (false, const DatabaseFailure('Title cannot be empty'));
     }
     return await ref.read(todoRepositoryProvider).add(title: trimmedTitle);
   }
@@ -50,13 +50,5 @@ class TodoList extends _$TodoList {
   /// indicating whether deletion succeeded.
   Future<(bool success, Failure? failure)> deleteTodo(int id) async {
     return await ref.read(todoRepositoryProvider).delete(id: id);
-  }
-
-  /// Restores a previously deleted [todo] item entity to support "Undo" functionality.
-  ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether restoration succeeded.
-  Future<(bool success, Failure? failure)> restoreTodo(Todo todo) async {
-    return await ref.read(todoRepositoryProvider).restore(todo);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod_boilerplate/l10n/app_localizations.dart';
 
 import '../../../../core/errors/failure.dart';
 import '../../../settings/presentation/screens/settings_screen.dart';
@@ -10,7 +11,7 @@ import '../widgets/todo_list_item.dart';
 /// Presentation widget rendering the main todo overview screen.
 ///
 /// Displays reactive task lists managed by [todoListProvider], provides swipe-to-delete
-/// with undo capability, and allows navigation to settings or task creation dialogs.
+/// capability, and allows navigation to settings or task creation dialogs.
 class TodoScreen extends ConsumerWidget {
   /// Creates a new [TodoScreen] widget instance.
   const TodoScreen({super.key});
@@ -21,10 +22,11 @@ class TodoScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todosAsync = ref.watch(todoListProvider);
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Todos'),
+        title: Text(l10n?.appTitle ?? 'Todo Flow'),
         actions: [
           IconButton(
             tooltip: 'Settings',
@@ -119,8 +121,7 @@ class TodoScreen extends ConsumerWidget {
                   final (success, failure) = await ref
                       .read(todoListProvider.notifier)
                       .deleteTodo(todo.id);
-                  if (!context.mounted) return;
-                  if (!success) {
+                  if (!success && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
@@ -128,31 +129,7 @@ class TodoScreen extends ConsumerWidget {
                         ),
                       ),
                     );
-                    return;
                   }
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Deleted "${todo.title}"'),
-                      action: SnackBarAction(
-                        label: 'Undo',
-                        onPressed: () async {
-                          final (restored, restoreFailure) = await ref
-                              .read(todoListProvider.notifier)
-                              .restoreTodo(todo);
-                          if (!restored && context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  restoreFailure?.userMessage ??
-                                      'Failed to restore task',
-                                ),
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                  );
                 },
               );
             },

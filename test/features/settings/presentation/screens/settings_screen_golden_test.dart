@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod_boilerplate/features/settings/domain/entities/user_preferences.dart';
 import 'package:flutter_riverpod_boilerplate/features/settings/presentation/providers/user_preferences_repository_provider.dart';
 import 'package:flutter_riverpod_boilerplate/features/settings/presentation/screens/settings_screen.dart';
+import 'package:flutter_riverpod_boilerplate/l10n/app_localizations.dart';
 
 import '../../../../helpers/fake_user_preferences_repository.dart';
 
@@ -37,6 +38,8 @@ void main() {
           userPreferencesRepositoryProvider.overrideWithValue(repository),
         ],
         child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
             useMaterial3: true,

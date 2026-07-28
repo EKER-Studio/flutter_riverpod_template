@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod_boilerplate/l10n/app_localizations.dart';
 
 import 'features/settings/domain/entities/user_preferences.dart';
 import 'features/settings/presentation/providers/user_preferences_notifier.dart';
@@ -22,6 +23,8 @@ class App extends ConsumerWidget {
 
     return MaterialApp(
       title: 'Flutter Blueprint',
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,

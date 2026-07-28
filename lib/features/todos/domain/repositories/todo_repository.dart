@@ -45,11 +45,4 @@ abstract class TodoRepository {
   /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
   /// indicating whether deletion succeeded or returning a [Failure] on error.
   Future<(bool success, Failure? failure)> delete({required int id});
-
-  /// Re-inserts a previously deleted [todo], preserving its original fields.
-  ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether restoration succeeded or returning a [Failure] on error.
-  /// Used to implement "Undo" functionality following a delete operation.
-  Future<(bool success, Failure? failure)> restore(Todo todo);
 }

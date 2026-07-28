@@ -68,7 +68,7 @@ class SettingsScreen extends ConsumerWidget {
                 ButtonSegment<UserThemeMode>(
                   value: UserThemeMode.dark,
                   icon: Icon(Icons.dark_mode_outlined),
-                  label: Text('Dark'),
+                  label: Text('Dark Mode'),
                 ),
               ],
               selected: {preferences.themeMode},

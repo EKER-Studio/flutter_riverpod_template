@@ -12,6 +12,7 @@ import 'package:flutter_riverpod_boilerplate/features/todos/domain/entities/todo
 import 'package:flutter_riverpod_boilerplate/features/todos/presentation/providers/todo_detail_notifier.dart';
 import 'package:flutter_riverpod_boilerplate/features/todos/presentation/providers/todo_repository_provider.dart';
 import 'package:flutter_riverpod_boilerplate/features/todos/presentation/screens/todo_screen_detail.dart';
+import 'package:flutter_riverpod_boilerplate/l10n/app_localizations.dart';
 
 import '../../../../helpers/fake_todo_repository.dart';
 
@@ -55,7 +56,11 @@ void main() {
               1,
             ).overrideWith(() => LoadingTodoDetailNotifier()),
           ],
-          child: const MaterialApp(home: TodoDetailScreen(todoId: 1)),
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: TodoDetailScreen(todoId: 1),
+          ),
         ),
       );
 
@@ -81,7 +86,11 @@ void main() {
             todoRepositoryProvider.overrideWithValue(repository),
             todoDetailProvider(1).overrideWith(() => ErrorTodoDetailNotifier()),
           ],
-          child: const MaterialApp(home: TodoDetailScreen(todoId: 1)),
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: TodoDetailScreen(todoId: 1),
+          ),
         ),
       );
 
@@ -103,7 +112,11 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [todoRepositoryProvider.overrideWithValue(repository)],
-          child: const MaterialApp(home: TodoDetailScreen(todoId: 999)),
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: TodoDetailScreen(todoId: 999),
+          ),
         ),
       );
 
@@ -136,7 +149,11 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [todoRepositoryProvider.overrideWithValue(repository)],
-          child: const MaterialApp(home: TodoDetailScreen(todoId: 1)),
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: TodoDetailScreen(todoId: 1),
+          ),
         ),
       );
 
@@ -169,7 +186,11 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [todoRepositoryProvider.overrideWithValue(repository)],
-          child: const MaterialApp(home: TodoDetailScreen(todoId: 2)),
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: TodoDetailScreen(todoId: 2),
+          ),
         ),
       );
 

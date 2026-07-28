@@ -28,13 +28,6 @@ analyzer:
     # Android
     - "android/**"
 
-custom_lint:
-  rules:
-    # `avoid_infrastructure_imports_in_presentation` was removed here — no
-    # package in this repo implements it, so `dart run custom_lint` /
-    # `flutter analyze` would fail with "rule not found". Re-add once a real
-    # custom_lint plugin package provides it, and update AGENTS.md to match.
-
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`

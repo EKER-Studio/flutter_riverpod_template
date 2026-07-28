@@ -79,7 +79,7 @@ class FakeTodoRepository implements TodoRepository {
   }) async {
     final index = _todos.indexWhere((todo) => todo.id == id);
     if (index == -1) {
-      return (false, NotFoundFailure('Todo with id $id not found'));
+      return (false, DatabaseFailure('Todo with id $id not found'));
     }
 
     final todo = _todos[index];
@@ -91,13 +91,6 @@ class FakeTodoRepository implements TodoRepository {
   @override
   Future<(bool success, Failure? failure)> delete({required int id}) async {
     _todos.removeWhere((todo) => todo.id == id);
-    _emit();
-    return (true, null);
-  }
-
-  @override
-  Future<(bool success, Failure? failure)> restore(Todo todo) async {
-    _todos.insert(0, todo);
     _emit();
     return (true, null);
   }

@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
+import 'app_localizations_pl.dart';
 
 // ignore_for_file: type=lint
 
@@ -66,8 +67,8 @@ abstract class AppLocalizations {
 
   final String localeName;
 
-  static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+  static AppLocalizations? of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
   static const LocalizationsDelegate<AppLocalizations> delegate =
@@ -92,7 +93,16 @@ abstract class AppLocalizations {
       ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('pl'),
+  ];
+
+  /// The title of the application displayed in the top appBar
+  ///
+  /// In en, this message translates to:
+  /// **'Todo Flow'**
+  String get appTitle;
 }
 
 class _AppLocalizationsDelegate
@@ -106,7 +116,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en'].contains(locale.languageCode);
+      <String>['en', 'pl'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -117,6 +127,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'en':
       return AppLocalizationsEn();
+    case 'pl':
+      return AppLocalizationsPl();
   }
 
   throw FlutterError(

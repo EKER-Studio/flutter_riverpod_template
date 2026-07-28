@@ -29,7 +29,7 @@ class AddTodoFab extends StatelessWidget {
     return FloatingActionButton.extended(
       onPressed: () => _showAddDialog(context),
       icon: const Icon(Icons.add),
-      label: const Text('Add'),
+      label: const Text('Add Task'),
     );
   }
 }

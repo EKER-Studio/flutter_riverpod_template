@@ -104,13 +104,13 @@ void main() {
   });
 
   group('TodoRepositoryImpl - toggleCompleted()', () {
-    test('returns (false, NotFoundFailure) when item does not exist', () async {
+    test('returns (false, DatabaseFailure) when item does not exist', () async {
       when(() => mockCollection.get(1)).thenAnswer((_) async => null);
 
       final (success, failure) = await repository.toggleCompleted(id: 1);
 
       expect(success, isFalse);
-      expect(failure, isA<NotFoundFailure>());
+      expect(failure, isA<DatabaseFailure>());
       expect(failure?.message, 'Todo not found');
     });
 
@@ -185,66 +185,6 @@ void main() {
       expect(success, isFalse);
       expect(failure, isA<DatabaseFailure>());
       expect(failure?.message, contains('Unexpected error'));
-    });
-  });
-
-  group('TodoRepositoryImpl - restore()', () {
-    test('restores todo entity preserving fields', () async {
-      when(() => mockCollection.put(any())).thenAnswer((_) async => 10);
-
-      final todoToRestore = Todo(
-        id: 10,
-        title: 'Restored Task',
-        isCompleted: true,
-        createdAt: DateTime(2024, 2, 2),
-      );
-
-      final (success, failure) = await repository.restore(todoToRestore);
-
-      expect(success, isTrue);
-      expect(failure, isNull);
-      verify(
-        () => mockCollection.put(
-          any(
-            that: isA<TodoModel>()
-                .having((m) => m.id, 'id', 10)
-                .having((m) => m.title, 'title', 'Restored Task')
-                .having((m) => m.isCompleted, 'isCompleted', true),
-          ),
-        ),
-      ).called(1);
-    });
-
-    test('returns (false, DatabaseFailure) on IsarError', () async {
-      mockIsar.writeTxnException = IsarError('Restore error');
-
-      final (success, failure) = await repository.restore(
-        Todo(
-          id: 1,
-          title: 'Test',
-          isCompleted: false,
-          createdAt: DateTime.now(),
-        ),
-      );
-
-      expect(success, isFalse);
-      expect(failure, isA<DatabaseFailure>());
-    });
-
-    test('returns (false, DatabaseFailure) on unexpected exception', () async {
-      mockIsar.writeTxnException = Exception('Generic error');
-
-      final (success, failure) = await repository.restore(
-        Todo(
-          id: 1,
-          title: 'Test',
-          isCompleted: false,
-          createdAt: DateTime.now(),
-        ),
-      );
-
-      expect(success, isFalse);
-      expect(failure, isA<DatabaseFailure>());
     });
   });
 
