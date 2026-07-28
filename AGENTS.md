@@ -61,8 +61,8 @@ For every public class/method, add a doc comment following the language's standa
 
 ---
 
-## Project Stack: flutter_riverpod_boilerplate
-*(Built strictly on 3 pillars: Clean Architecture, Riverpod 3.x, and Isar Community.)*
+## Project Stack: flutter_riverpod_boilerplate (v1.0.0)
+*(Frozen strictly around 3 pillars: Clean Architecture, Riverpod 3.x, and Isar Community, with an integrated minimal l10n blueprint.)*
 
 ### Build & Generation Commands
 | Command | Purpose |
@@ -114,7 +114,7 @@ Before considering any feature involving streams, timers, or animations complete
 ### Mandatory Verification Pipeline
 After any modification within the `lib/**` directory, you MUST execute the following pipeline in strict order:
 1. `dart run build_runner build --delete-conflicting-outputs`
-2. `dart format --output=none --set-exit-if-changed lib test bin scripts`
+2. `dart format --output=none --set-exit-if-changed lib test`
 3. `flutter analyze`
 4. `flutter test`
 

@@ -1,9 +1,11 @@
-# 🚀 Flutter GitHub Template — Clean Architecture, Riverpod 3.x & Isar Community
+# 🚀 Flutter GitHub Template — Clean Architecture, Riverpod 3.x & Isar Community (v1.0.0)
 
-A razor-sharp, minimalist Flutter GitHub Template built strictly on 3 core pillars:
+A razor-sharp, minimalist, production-ready Flutter GitHub Template frozen strictly around 3 core pillars:
 1. **Clean Architecture** (Feature-First)
 2. **Riverpod 3.x** (`riverpod_annotation` & `@riverpod` code generation)
 3. **Isar Community** (High-performance local database & reactive streams)
+
+Includes an integrated minimal localization (l10n) blueprint.
 
 ---
 
@@ -70,7 +72,7 @@ bash before_push.sh
 
 ```bash
 # Format check
-dart format --output=none --set-exit-if-changed lib test bin scripts
+dart format --output=none --set-exit-if-changed lib test
 
 # Static analysis
 flutter analyze

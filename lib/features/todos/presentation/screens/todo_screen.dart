@@ -121,13 +121,18 @@ class TodoScreen extends ConsumerWidget {
                   final (success, failure) = await ref
                       .read(todoListProvider.notifier)
                       .deleteTodo(todo.id);
-                  if (!success && context.mounted) {
+                  if (!context.mounted) return;
+                  if (!success) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
                           failure?.userMessage ?? 'Failed to delete task',
                         ),
                       ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Task deleted')),
                     );
                   }
                 },

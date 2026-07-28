@@ -1,9 +1,11 @@
 # Gemini Code Assistant Instructions
 
-This repository is a minimalist Flutter GitHub Template strictly built on 3 core pillars:
+This repository is a minimalist Flutter GitHub Template (v1.0.0) frozen strictly around 3 core pillars:
 1. **Clean Architecture**
 2. **Riverpod 3.x**
 3. **Isar Community**
+
+Includes an integrated minimal localization (l10n) blueprint.
 
 The project instructions are defined in:
 
