@@ -64,6 +64,12 @@ flutter pub get
 # Generate Riverpod & Isar code
 dart run build_runner build --delete-conflicting-outputs
 
+# Generate App Icons
+dart run flutter_launcher_icons
+
+# Generate Native Splash Screen
+dart run flutter_native_splash:create
+
 # Execute full verification pipeline
 bash before_push.sh
 ```

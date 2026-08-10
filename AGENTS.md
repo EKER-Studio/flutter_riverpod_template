@@ -70,6 +70,8 @@ For every public class/method, add a doc comment following the language's standa
 | `flutter pub get` | Install dependencies |
 | `flutter gen-l10n` | Regenerate localization if ARB files changed |
 | `dart run build_runner build --delete-conflicting-outputs` | Generate Riverpod + Isar code |
+| `dart run flutter_launcher_icons` | Generate app icons (Android + iOS) from `assets/icon/` |
+| `dart run flutter_native_splash:create` | Generate native splash screens from `assets/icon/` |
 | `dart format --output=none --set-exit-if-changed lib test` | Check formatting |
 | `flutter analyze` | Static analysis |
 | `flutter test` | Run tests (`--tags=golden` to run golden tests only) |
