@@ -55,6 +55,27 @@ dev_dependencies:
   custom_lint: ^0.8.1
   flutter_launcher_icons: ^0.14.1
 
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+
+  # 1. Standard Icon (iOS Light Mode / Legacy iOS / Fallback)
+  image_path: "assets/icon/app_icon.png"
+
+  # 2. iOS 18+ Dark Mode
+  image_path_ios_dark: "assets/icon/app_icon_dark.png"
+
+  # 3. iOS 18+ Tinted Mode
+  image_path_ios_tinted: "assets/icon/app_icon_monochrome.png"
+  
+  # Android Adaptive Icons (API 26+)
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icon/app_icon_foreground.png"
+
+  # Android 13+ Dynamic Themed Icons (Material You)
+  adaptive_icon_monochrome: "assets/icon/app_icon_monochrome.png"
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -100,30 +121,9 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 
-flutter_launcher_icons:
-  android: true
-  ios: true
-  remove_alpha_ios: true
-
-  # 1. Standard Icon (iOS Light Mode / Legacy iOS / Fallback)
-  image_path: "assets/icon/app_icon.png"
-
-  # 2. iOS 18+ Dark Mode
-  image_path_ios_dark: "assets/icon/app_icon_dark.png"
-
-  # 3. iOS 18+ Tinted Mode
-  image_path_ios_tinted: "assets/icon/app_icon_monochrome.png"
-  
-  # Android Adaptive Icons (API 26+)
-  adaptive_icon_background: "#3F51B5"
-  adaptive_icon_foreground: "assets/icon/app_icon_foreground.png"
-
-  # Android 13+ Dynamic Themed Icons (Material You)
-  adaptive_icon_monochrome: "assets/icon/app_icon_monochrome.png"
-
 flutter_native_splash:
-  color: "#FFFFFF"
-  color_dark: "#3F51B5"
+  color: "#FDF7FF"
+  color_dark: "#141218"
 
   image: "assets/icon/splash_light.png"
   image_dark: "assets/icon/splash_dark.png"
@@ -131,8 +131,8 @@ flutter_native_splash:
   android_12:
     image: "assets/icon/app_icon_foreground.png"
     image_dark: "assets/icon/app_icon_foreground.png"
-    icon_background_color: "#FFFFFF"
-    icon_background_color_dark: "#3F51B5"
+  icon_background_color: "#FDF7FF"
+  icon_background_color_dark: "#141218"
 
   android: true
   ios: true
