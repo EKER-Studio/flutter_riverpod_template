@@ -62,7 +62,7 @@ lib/
 flutter pub get
 
 # Generate Riverpod & Isar code
-dart run build_runner build --delete-conflicting-outputs
+dart run build_runner build
 
 # Generate App Icons
 dart run flutter_launcher_icons
