@@ -60,15 +60,14 @@ log_success "Localization classes generated successfully."
 # ------------------------------------------------------------------------------
 log_step "3" "Regenerating code declarations (Build Runner)..."
 # ------------------------------------------------------------------------------
-# Deletes conflicting outputs automatically to prevent compilation deadlocks
-dart run build_runner build > /dev/null
+dart run build_runner build
 log_success "Code generation completed."
 
 # ------------------------------------------------------------------------------
 log_step "4" "Verifying code formatting standards..."
 # ------------------------------------------------------------------------------
 # Ensures the code strictly obeys Dart formatting guidelines without altering files
-dart format --output=none --set-exit-if-changed lib test
+dart format --set-exit-if-changed lib test
 log_success "Codebase formatting aligns with style specifications."
 
 # ------------------------------------------------------------------------------
@@ -89,7 +88,7 @@ log_success "All automated unit and widget tests completed successfully."
 # ------------------------------------------------------------------------------
 log_step "7" "Checking Android build integrity (Debug APK)..."
 # ------------------------------------------------------------------------------
-flutter build apk --debug --code-size-directory=build/logs/ || { echo "❌ [FAIL] Android build failed."; exit 1; }
+flutter build apk --debug || { echo "❌ [FAIL] Android build failed."; exit 1; }
 log_success "Android build completed successfully. Debug APK generated at build/app/outputs/flutter-apk/app-debug.apk."
 
 # ==============================================================================
