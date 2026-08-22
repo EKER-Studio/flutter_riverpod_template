@@ -45,7 +45,7 @@ final class TodoListProvider
   TodoList create() => TodoList();
 }
 
-String _$todoListHash() => r'e96c115da4d522950c1040e10c8c7f42d9991bb7';
+String _$todoListHash() => r'8c245efac9c906c8441b9f01e7b765f0c1330fdc';
 
 /// Riverpod state notifier managing the reactive stream of todo items.
 ///
