@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_boilerplate/l10n/app_localizations.dart';
@@ -23,7 +24,7 @@ class App extends ConsumerWidget {
     final preferences = ref.watch(userPreferencesProvider).value;
 
     return MaterialApp(
-      title: 'Flutter Blueprint',
+      title: kDebugMode ? 'Flutter Blueprint (Dev)' : 'Flutter Blueprint',
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: AppTheme.lightTheme,
