@@ -37,11 +37,13 @@ Ultra-fast, offline-first local database providing reactive queries and watch st
 
 ```text
 lib/
-├── main.dart                    # Entry point (Isar initialization & ProviderScope)
-├── app.dart                     # MaterialApp configuration
+├── main.dart                    # Entry point (AppStartupWidget & ProviderScope)
+├── app.dart                     # MaterialApp.router configuration
 ├── core/
-│   ├── errors/                  # Domain Failure hierarchy
-│   └── providers/               # Global providers
+│   ├── errors/                  # Domain Failure hierarchy & Result types
+│   ├── presentation/            # AppTheme & AppStartupWidget (loading/error)
+│   ├── providers/               # Global providers (isarProvider, appStartupProvider)
+│   └── router/                  # GoRouter declarative routes (AppRoute & appRouterProvider)
 └── features/
     ├── todos/                   # Feature: Todos
     │   ├── domain/              # Entities & Repository contracts
@@ -71,7 +73,7 @@ dart run flutter_launcher_icons
 dart run flutter_native_splash:create
 
 # Execute full verification pipeline
-bash before_push.sh
+bash scripts/before_push.sh
 ```
 
 ## 🧪 Verification
