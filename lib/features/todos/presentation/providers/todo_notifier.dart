@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/errors/failure.dart';
+import '../../../../core/errors/result.dart';
 import '../../domain/entities/todo.dart';
 import 'todo_repository_provider.dart';
 
@@ -26,9 +27,8 @@ class TodoList extends _$TodoList {
   /// Adds a new todo item with the given [title].
   ///
   /// Trims whitespace from [title] before calling the repository. Returns a [Future] completing
-  /// with a tuple `(bool success, Failure? failure)` containing `(false, DatabaseFailure)`
-  /// if [title] is empty or whitespace-only.
-  Future<(bool success, Failure? failure)> addTodo(String title) async {
+  /// with a [CommandResult] containing `(false, DatabaseFailure)` if [title] is empty or whitespace-only.
+  Future<CommandResult> addTodo(String title) async {
     final trimmedTitle = title.trim();
     if (trimmedTitle.isEmpty) {
       return (false, const DatabaseFailure('Title cannot be empty'));
@@ -38,17 +38,15 @@ class TodoList extends _$TodoList {
 
   /// Toggles the completion status of a todo item identified by [id].
   ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether the status update succeeded.
-  Future<(bool success, Failure? failure)> toggleTodo(int id) async {
+  /// Returns a [Future] completing with a [CommandResult] indicating whether the status update succeeded.
+  Future<CommandResult> toggleTodo(int id) async {
     return await ref.read(todoRepositoryProvider).toggleCompleted(id: id);
   }
 
   /// Deletes a todo item identified by [id].
   ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether deletion succeeded.
-  Future<(bool success, Failure? failure)> deleteTodo(int id) async {
+  /// Returns a [Future] completing with a [CommandResult] indicating whether deletion succeeded.
+  Future<CommandResult> deleteTodo(int id) async {
     return await ref.read(todoRepositoryProvider).delete(id: id);
   }
 }

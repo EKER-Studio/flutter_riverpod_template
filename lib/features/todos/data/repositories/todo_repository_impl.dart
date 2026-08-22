@@ -1,6 +1,7 @@
 import 'package:isar_community/isar.dart';
 
 import '../../../../core/errors/failure.dart';
+import '../../../../core/errors/result.dart';
 import '../../domain/entities/todo.dart';
 import '../../domain/repositories/todo_repository.dart';
 import '../mappers/todo_mapper.dart';
@@ -72,10 +73,10 @@ class TodoRepositoryImpl implements TodoRepository {
 
   /// Adds a new todo item with the given [title].
   ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether database insertion succeeded or returning a [DatabaseFailure] on error.
+  /// Returns a [Future] completing with a [CommandResult] indicating whether database
+  /// insertion succeeded or returning a [DatabaseFailure] on error.
   @override
-  Future<(bool success, Failure? failure)> add({required String title}) async {
+  Future<CommandResult> add({required String title}) async {
     try {
       final model = TodoModel()
         ..title = title.trim()
@@ -94,13 +95,10 @@ class TodoRepositoryImpl implements TodoRepository {
 
   /// Toggles the completion status of a todo item identified by [id].
   ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// containing `true` if updated, or returning a [DatabaseFailure] if [id] does not exist
-  /// or a storage error occurs.
+  /// Returns a [Future] completing with a [CommandResult] containing `true` if updated,
+  /// or returning a [DatabaseFailure] if [id] does not exist or a storage error occurs.
   @override
-  Future<(bool success, Failure? failure)> toggleCompleted({
-    required int id,
-  }) async {
+  Future<CommandResult> toggleCompleted({required int id}) async {
     try {
       var found = false;
       await _isar.writeTxn(() async {
@@ -126,10 +124,10 @@ class TodoRepositoryImpl implements TodoRepository {
 
   /// Deletes a todo item identified by [id] from Isar storage.
   ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether deletion succeeded or returning a [DatabaseFailure] on error.
+  /// Returns a [Future] completing with a [CommandResult] indicating whether deletion
+  /// succeeded or returning a [DatabaseFailure] on error.
   @override
-  Future<(bool success, Failure? failure)> delete({required int id}) async {
+  Future<CommandResult> delete({required int id}) async {
     try {
       await _isar.writeTxn(() async {
         await _isar.todoModels.delete(id);

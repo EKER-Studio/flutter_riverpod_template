@@ -1,4 +1,5 @@
 import '../../../../core/errors/failure.dart';
+import '../../../../core/errors/result.dart';
 import '../entities/todo.dart';
 
 /// Repository interface defining domain operations for todo items.
@@ -30,19 +31,19 @@ abstract class TodoRepository {
 
   /// Adds a new todo item with the given [title].
   ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether creation succeeded or returning a [Failure] on error.
-  Future<(bool success, Failure? failure)> add({required String title});
+  /// Returns a [Future] completing with a [CommandResult] indicating whether
+  /// creation succeeded or returning a [Failure] on error.
+  Future<CommandResult> add({required String title});
 
   /// Toggles the completion status of a todo item identified by [id].
   ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether the operation succeeded or returning a [Failure] on error.
-  Future<(bool success, Failure? failure)> toggleCompleted({required int id});
+  /// Returns a [Future] completing with a [CommandResult] indicating whether
+  /// the operation succeeded or returning a [Failure] on error.
+  Future<CommandResult> toggleCompleted({required int id});
 
   /// Deletes a todo item identified by [id].
   ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether deletion succeeded or returning a [Failure] on error.
-  Future<(bool success, Failure? failure)> delete({required int id});
+  /// Returns a [Future] completing with a [CommandResult] indicating whether
+  /// deletion succeeded or returning a [Failure] on error.
+  Future<CommandResult> delete({required int id});
 }

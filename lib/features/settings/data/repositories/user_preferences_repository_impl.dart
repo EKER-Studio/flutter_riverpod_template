@@ -1,6 +1,7 @@
 import 'package:isar_community/isar.dart';
 
 import '../../../../core/errors/failure.dart';
+import '../../../../core/errors/result.dart';
 import '../../domain/entities/user_preferences.dart';
 import '../../domain/repositories/user_preferences_repository.dart';
 import '../mappers/user_preferences_mapper.dart';
@@ -71,12 +72,10 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
 
   /// Updates the application theme setting to [themeMode].
   ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether updating preferences succeeded or returning a [DatabaseFailure] on error.
+  /// Returns a [Future] completing with a [CommandResult] indicating whether updating
+  /// preferences succeeded or returning a [DatabaseFailure] on error.
   @override
-  Future<(bool success, Failure? failure)> updateThemeMode(
-    UserThemeMode themeMode,
-  ) async {
+  Future<CommandResult> updateThemeMode(UserThemeMode themeMode) async {
     try {
       await _isar.writeTxn(() async {
         final model = await _getOrCreateModel();
@@ -93,12 +92,10 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
 
   /// Updates whether application notifications are enabled to [isEnabled].
   ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether updating preferences succeeded or returning a [DatabaseFailure] on error.
+  /// Returns a [Future] completing with a [CommandResult] indicating whether updating
+  /// preferences succeeded or returning a [DatabaseFailure] on error.
   @override
-  Future<(bool success, Failure? failure)> updateNotificationsEnabled(
-    bool isEnabled,
-  ) async {
+  Future<CommandResult> updateNotificationsEnabled(bool isEnabled) async {
     try {
       await _isar.writeTxn(() async {
         final model = await _getOrCreateModel();

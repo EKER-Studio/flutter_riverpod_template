@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/errors/failure.dart';
+import '../../../../core/errors/result.dart';
 import '../../domain/entities/user_preferences.dart';
 import 'user_preferences_repository_provider.dart';
 
@@ -25,11 +25,8 @@ class UserPreferencesNotifier extends _$UserPreferencesNotifier {
 
   /// Updates the application theme mode to [themeMode].
   ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether the theme update succeeded.
-  Future<(bool success, Failure? failure)> updateThemeMode(
-    UserThemeMode themeMode,
-  ) async {
+  /// Returns a [Future] completing with a [CommandResult] indicating whether the theme update succeeded.
+  Future<CommandResult> updateThemeMode(UserThemeMode themeMode) async {
     return await ref
         .read(userPreferencesRepositoryProvider)
         .updateThemeMode(themeMode);
@@ -37,11 +34,8 @@ class UserPreferencesNotifier extends _$UserPreferencesNotifier {
 
   /// Updates the user's notification preference flag to [isEnabled].
   ///
-  /// Returns a [Future] completing with a tuple `(bool success, Failure? failure)`
-  /// indicating whether the preference update succeeded.
-  Future<(bool success, Failure? failure)> updateNotificationsEnabled(
-    bool isEnabled,
-  ) async {
+  /// Returns a [Future] completing with a [CommandResult] indicating whether the preference update succeeded.
+  Future<CommandResult> updateNotificationsEnabled(bool isEnabled) async {
     return await ref
         .read(userPreferencesRepositoryProvider)
         .updateNotificationsEnabled(isEnabled);
