@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/router/app_routes.dart';
 import '../../domain/entities/todo.dart';
-import '../screens/todo_screen_detail.dart';
 
 /// Reusable list tile component rendering a single todo item within a dismissible list.
 ///
@@ -15,6 +16,7 @@ class TodoListItem extends StatelessWidget {
     required this.todo,
     required this.onToggle,
     required this.onDelete,
+    this.onTap,
   });
 
   /// The domain [Todo] entity represented by this list item.
@@ -25,6 +27,9 @@ class TodoListItem extends StatelessWidget {
 
   /// Callback executed when the item is swiped away to be deleted.
   final VoidCallback onDelete;
+
+  /// Optional custom callback executed on tap, overriding default GoRouter navigation.
+  final VoidCallback? onTap;
 
   /// Builds the dismissible list tile widget.
   ///
@@ -45,14 +50,14 @@ class TodoListItem extends StatelessWidget {
       ),
       onDismissed: (_) => onDelete(),
       child: ListTile(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TodoDetailScreen(todoId: todo.id),
-            ),
-          );
-        },
+        onTap:
+            onTap ??
+            () {
+              context.pushNamed(
+                AppRoute.todoDetail.name,
+                pathParameters: {'id': todo.id.toString()},
+              );
+            },
         leading: Semantics(
           label: todo.isCompleted
               ? 'Mark "${todo.title}" as not done'

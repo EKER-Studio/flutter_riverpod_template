@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_boilerplate/l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/errors/failure.dart';
-import '../../../settings/presentation/screens/settings_screen.dart';
+import '../../../../core/router/app_routes.dart';
 import '../providers/todo_notifier.dart';
 import '../widgets/add_todo_fab.dart';
 import '../widgets/todo_list_item.dart';
@@ -31,11 +32,7 @@ class TodoScreen extends ConsumerWidget {
           IconButton(
             tooltip: 'Settings',
             icon: const Icon(Icons.settings_outlined),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(builder: (_) => const SettingsScreen()),
-              );
-            },
+            onPressed: () => context.pushNamed(AppRoute.settings.name),
           ),
         ],
       ),

@@ -78,7 +78,7 @@ For every public class/method, add a doc comment following the language's standa
 | `bash before_push.sh` | Full pre-push pipeline |
 
 ### Architecture & Layer Boundaries
-Feature-First Clean Architecture under `lib/features/<feature>/`. Two features currently exist: `todos` (CRUD with streams) and `settings` (singleton Isar collection, id=0). Global providers live under `lib/core/providers/`.
+Feature-First Clean Architecture under `lib/features/<feature>/`. Two features currently exist: `todos` (CRUD with streams) and `settings` (singleton Isar collection, id=0). Global providers live under `lib/core/providers/`, and declarative routing is configured under `lib/core/router/` using `GoRouter`.
 
 - **Domain Layer** (`lib/features/<feature>/domain/`): Pure Dart — entities, repository interfaces, use cases. NO Flutter or Riverpod imports allowed here.
 - **Data Layer** (`lib/features/<feature>/data/`): Repository implementations, Isar models, and **synchronous** mappers (extensions).

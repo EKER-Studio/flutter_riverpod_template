@@ -5,25 +5,27 @@ import 'package:flutter_riverpod_boilerplate/l10n/app_localizations.dart';
 
 import 'features/settings/domain/entities/user_preferences.dart';
 import 'features/settings/presentation/providers/user_preferences_notifier.dart';
-import 'features/todos/presentation/screens/todo_screen.dart';
 import 'core/presentation/theme/app_theme.dart';
+import 'core/router/app_router.dart';
 
 /// Root application widget configuring themes, navigation, and core Material3 setup.
 ///
 /// Reactively subscribes to [userPreferencesProvider] to apply dark, light, or system
-/// theme modes dynamically.
+/// theme modes dynamically, and uses [appRouterProvider] for declarative routing.
 class App extends ConsumerWidget {
   /// Creates a new root [App] widget instance.
   const App({super.key});
 
-  /// Builds the top-level [MaterialApp] with reactive theme configuration.
+  /// Builds the top-level [MaterialApp] with reactive theme and router configuration.
   ///
-  /// Takes a build [context] and Riverpod widget [ref] to watch theme preferences.
+  /// Takes a build [context] and Riverpod widget [ref] to watch theme and router preferences.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(userPreferencesProvider).value;
+    final router = ref.watch(appRouterProvider);
 
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: kDebugMode ? 'Flutter Blueprint (Dev)' : 'Flutter Blueprint',
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -32,7 +34,6 @@ class App extends ConsumerWidget {
       themeMode: _toFlutterThemeMode(
         preferences?.themeMode ?? UserThemeMode.system,
       ),
-      home: const TodoScreen(),
     );
   }
 
