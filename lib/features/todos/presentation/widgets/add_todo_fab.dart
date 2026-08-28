@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/app_localizations.dart';
+
 /// Floating action button triggering a modal dialog to create a new todo item.
 class AddTodoFab extends StatelessWidget {
   /// Creates an [AddTodoFab] widget with the given [onAdd] completion callback.
@@ -26,10 +28,12 @@ class AddTodoFab extends StatelessWidget {
   /// Takes the widget build [context].
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return FloatingActionButton.extended(
       onPressed: () => _showAddDialog(context),
       icon: const Icon(Icons.add),
-      label: const Text('Add Task'),
+      label: Text(l10n?.addTaskButton ?? 'Add Task'),
     );
   }
 }
@@ -59,20 +63,22 @@ class _AddTodoDialogState extends State<_AddTodoDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return AlertDialog(
-      title: const Text('New Task'),
+      title: Text(l10n?.newTaskDialogTitle ?? 'New Task'),
       content: Form(
         key: _formKey,
         child: TextFormField(
           controller: _controller,
           autofocus: true,
-          decoration: const InputDecoration(
-            labelText: 'Title',
-            hintText: 'E.g. Buy milk',
+          decoration: InputDecoration(
+            labelText: l10n?.taskTitleLabel ?? 'Title',
+            hintText: l10n?.taskTitleHint ?? 'E.g. Buy milk',
           ),
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
-              return 'Title cannot be empty';
+              return l10n?.titleCannotBeEmpty ?? 'Title cannot be empty';
             }
             return null;
           },
@@ -82,9 +88,9 @@ class _AddTodoDialogState extends State<_AddTodoDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(l10n?.cancelButton ?? 'Cancel'),
         ),
-        FilledButton(onPressed: _submit, child: const Text('Add')),
+        FilledButton(onPressed: _submit, child: Text(l10n?.addButton ?? 'Add')),
       ],
     );
   }

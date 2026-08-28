@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../../features/todos/presentation/screens/todo_screen.dart';
 import '../../features/todos/presentation/screens/todo_screen_detail.dart';
+import '../../l10n/app_localizations.dart';
 import 'app_routes.dart';
 
 part 'app_router.g.dart';
@@ -45,7 +46,16 @@ GoRouter appRouter(Ref ref) {
             const SettingsScreen(),
       ),
     ],
-    errorBuilder: (BuildContext context, GoRouterState state) =>
-        Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),
+    errorBuilder: (BuildContext context, GoRouterState state) {
+      final l10n = AppLocalizations.of(context);
+      return Scaffold(
+        body: Center(
+          child: Text(
+            l10n?.pageNotFound(state.uri.toString()) ??
+                'Page not found: ${state.uri}',
+          ),
+        ),
+      );
+    },
   );
 }

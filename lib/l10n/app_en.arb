@@ -3,5 +3,163 @@
   "appTitle": "Todo Flow",
   "@appTitle": {
     "description": "The title of the application displayed in the top appBar"
+  },
+  "initializationFailed": "Initialization Failed",
+  "@initializationFailed": {
+    "description": "Header text displayed when startup initialization fails"
+  },
+  "tryAgain": "Try again",
+  "@tryAgain": {
+    "description": "Button label to retry a failed operation"
+  },
+  "pageNotFound": "Page not found: {uri}",
+  "@pageNotFound": {
+    "description": "Error message displayed for unrecognized routes",
+    "placeholders": {
+      "uri": {
+        "type": "String",
+        "example": "/unknown"
+      }
+    }
+  },
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Title displayed on the settings screen app bar"
+  },
+  "failedToLoadSettings": "Failed to load settings",
+  "@failedToLoadSettings": {
+    "description": "Error message when settings cannot be retrieved"
+  },
+  "themeSystem": "System",
+  "@themeSystem": {
+    "description": "Label for system default theme option"
+  },
+  "themeLight": "Light",
+  "@themeLight": {
+    "description": "Label for light theme option"
+  },
+  "themeDark": "Dark Mode",
+  "@themeDark": {
+    "description": "Label for dark theme option"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Label for notifications toggle switch"
+  },
+  "failedToUpdatePreferences": "Failed to update preferences",
+  "@failedToUpdatePreferences": {
+    "description": "Snackbar message when updating notification preference fails"
+  },
+  "failedToUpdateThemeMode": "Failed to update theme mode",
+  "@failedToUpdateThemeMode": {
+    "description": "Snackbar message when updating theme mode fails"
+  },
+  "settingsTooltip": "Settings",
+  "@settingsTooltip": {
+    "description": "Accessibility tooltip for settings button in app bar"
+  },
+  "failedToLoadTasks": "Failed to load tasks",
+  "@failedToLoadTasks": {
+    "description": "Error message when task list cannot be loaded"
+  },
+  "noTasksFound": "No tasks found",
+  "@noTasksFound": {
+    "description": "Header message displayed when the task list is empty"
+  },
+  "addFirstTaskDescription": "Add your first task using the button below",
+  "@addFirstTaskDescription": {
+    "description": "Subtext prompting user to add their first task"
+  },
+  "failedToToggleTask": "Failed to toggle task",
+  "@failedToToggleTask": {
+    "description": "Snackbar message when task completion toggle fails"
+  },
+  "failedToDeleteTask": "Failed to delete task",
+  "@failedToDeleteTask": {
+    "description": "Snackbar message when task deletion fails"
+  },
+  "taskDeleted": "Task deleted",
+  "@taskDeleted": {
+    "description": "Snackbar confirmation message after a task is deleted"
+  },
+  "failedToAddTask": "Failed to add task",
+  "@failedToAddTask": {
+    "description": "Snackbar message when creating a new task fails"
+  },
+  "taskDetailsTitle": "Task Details",
+  "@taskDetailsTitle": {
+    "description": "Title displayed on the task details screen app bar"
+  },
+  "genericError": "An error occurred",
+  "@genericError": {
+    "description": "Generic error header message"
+  },
+  "taskNotFound": "Task not found.",
+  "@taskNotFound": {
+    "description": "Message displayed when the requested task does not exist"
+  },
+  "statusLabel": "Status",
+  "@statusLabel": {
+    "description": "Label for task completion status field"
+  },
+  "statusCompleted": "Completed",
+  "@statusCompleted": {
+    "description": "Status value indicating a task is finished"
+  },
+  "statusInProgress": "In progress",
+  "@statusInProgress": {
+    "description": "Status value indicating a task is not finished"
+  },
+  "createdAtLabel": "Created at",
+  "@createdAtLabel": {
+    "description": "Label for task creation timestamp field"
+  },
+  "addTaskButton": "Add Task",
+  "@addTaskButton": {
+    "description": "Label for floating action button to create a task"
+  },
+  "newTaskDialogTitle": "New Task",
+  "@newTaskDialogTitle": {
+    "description": "Title displayed on new task dialog"
+  },
+  "taskTitleLabel": "Title",
+  "@taskTitleLabel": {
+    "description": "Input field label for task title"
+  },
+  "taskTitleHint": "E.g. Buy milk",
+  "@taskTitleHint": {
+    "description": "Input field hint text for task title"
+  },
+  "titleCannotBeEmpty": "Title cannot be empty",
+  "@titleCannotBeEmpty": {
+    "description": "Validation error message when task title is empty"
+  },
+  "cancelButton": "Cancel",
+  "@cancelButton": {
+    "description": "Button label to cancel dialog action"
+  },
+  "addButton": "Add",
+  "@addButton": {
+    "description": "Button label to submit dialog action"
+  },
+  "markAsNotDone": "Mark \"{title}\" as not done",
+  "@markAsNotDone": {
+    "description": "Semantic accessibility label for unchecking a task",
+    "placeholders": {
+      "title": {
+        "type": "String",
+        "example": "Buy milk"
+      }
+    }
+  },
+  "markAsDone": "Mark \"{title}\" as done",
+  "@markAsDone": {
+    "description": "Semantic accessibility label for checking a task",
+    "placeholders": {
+      "title": {
+        "type": "String",
+        "example": "Buy milk"
+      }
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/router/app_routes.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/todo.dart';
 
 /// Reusable list tile component rendering a single todo item within a dismissible list.
@@ -36,6 +37,8 @@ class TodoListItem extends StatelessWidget {
   /// Takes the widget build [context].
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Dismissible(
       key: ValueKey(todo.id),
       direction: DismissDirection.endToStart,
@@ -60,8 +63,10 @@ class TodoListItem extends StatelessWidget {
             },
         leading: Semantics(
           label: todo.isCompleted
-              ? 'Mark "${todo.title}" as not done'
-              : 'Mark "${todo.title}" as done',
+              ? (l10n?.markAsNotDone(todo.title) ??
+                    'Mark "${todo.title}" as not done')
+              : (l10n?.markAsDone(todo.title) ??
+                    'Mark "${todo.title}" as done'),
           child: Checkbox(
             value: todo.isCompleted,
             onChanged: (_) => onToggle(),

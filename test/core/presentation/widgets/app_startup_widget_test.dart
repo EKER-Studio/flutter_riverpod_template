@@ -83,12 +83,12 @@ void main() {
 
       expect(find.text('Initialization Failed'), findsOneWidget);
       expect(find.textContaining('Database lock error'), findsOneWidget);
-      expect(find.widgetWithText(FilledButton, 'Try Again'), findsOneWidget);
+      expect(find.widgetWithText(FilledButton, 'Try again'), findsOneWidget);
       expect(find.text('App Recovered Content'), findsNothing);
 
       // Simulate recovery and retry
       shouldFail = false;
-      await tester.tap(find.widgetWithText(FilledButton, 'Try Again'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Try again'));
       await tester.pumpAndSettle();
 
       expect(find.text('App Recovered Content'), findsOneWidget);

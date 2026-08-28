@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/errors/failure.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../providers/todo_detail_notifier.dart';
 
 /// Presentation widget rendering detailed information for a single todo item.
@@ -22,9 +23,10 @@ class TodoDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todoAsync = ref.watch(todoDetailProvider(todoId));
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Task Details')),
+      appBar: AppBar(title: Text(l10n?.taskDetailsTitle ?? 'Task Details')),
       body: todoAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(
@@ -34,7 +36,7 @@ class TodoDetailScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'An error occurred',
+                  l10n?.genericError ?? 'An error occurred',
                   style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -47,7 +49,7 @@ class TodoDetailScreen extends ConsumerWidget {
                 const SizedBox(height: 16),
                 FilledButton(
                   onPressed: () => ref.invalidate(todoDetailProvider(todoId)),
-                  child: const Text('Try again'),
+                  child: Text(l10n?.tryAgain ?? 'Try again'),
                 ),
               ],
             ),
@@ -57,7 +59,7 @@ class TodoDetailScreen extends ConsumerWidget {
           if (todo == null) {
             return Center(
               child: Text(
-                'Task not found.',
+                l10n?.taskNotFound ?? 'Task not found.',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             );
@@ -81,14 +83,16 @@ class TodoDetailScreen extends ConsumerWidget {
                     ? Icons.check_circle
                     : Icons.radio_button_unchecked,
                 iconColor: todo.isCompleted ? Colors.green : Colors.grey,
-                label: 'Status',
-                value: todo.isCompleted ? 'Completed' : 'In progress',
+                label: l10n?.statusLabel ?? 'Status',
+                value: todo.isCompleted
+                    ? (l10n?.statusCompleted ?? 'Completed')
+                    : (l10n?.statusInProgress ?? 'In progress'),
               ),
               const Divider(height: 32),
               _buildDetailRow(
                 context,
                 icon: Icons.calendar_today,
-                label: 'Created at',
+                label: l10n?.createdAtLabel ?? 'Created at',
                 value: dateFormat.format(todo.createdAt),
               ),
             ],

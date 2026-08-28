@@ -30,7 +30,7 @@ class TodoScreen extends ConsumerWidget {
         title: Text(l10n?.appTitle ?? 'Todo Flow'),
         actions: [
           IconButton(
-            tooltip: 'Settings',
+            tooltip: l10n?.settingsTooltip ?? 'Settings',
             icon: const Icon(Icons.settings_outlined),
             onPressed: () => context.pushNamed(AppRoute.settings.name),
           ),
@@ -45,7 +45,7 @@ class TodoScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Failed to load tasks',
+                  l10n?.failedToLoadTasks ?? 'Failed to load tasks',
                   style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -58,7 +58,7 @@ class TodoScreen extends ConsumerWidget {
                 const SizedBox(height: 16),
                 FilledButton(
                   onPressed: () => ref.invalidate(todoListProvider),
-                  child: const Text('Try again'),
+                  child: Text(l10n?.tryAgain ?? 'Try again'),
                 ),
               ],
             ),
@@ -77,12 +77,13 @@ class TodoScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'No tasks found',
+                    l10n?.noTasksFound ?? 'No tasks found',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Add your first task using the button below',
+                    l10n?.addFirstTaskDescription ??
+                        'Add your first task using the button below',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
@@ -108,7 +109,9 @@ class TodoScreen extends ConsumerWidget {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          failure?.userMessage ?? 'Failed to toggle task',
+                          failure?.userMessage ??
+                              (l10n?.failedToToggleTask ??
+                                  'Failed to toggle task'),
                         ),
                       ),
                     );
@@ -123,13 +126,17 @@ class TodoScreen extends ConsumerWidget {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          failure?.userMessage ?? 'Failed to delete task',
+                          failure?.userMessage ??
+                              (l10n?.failedToDeleteTask ??
+                                  'Failed to delete task'),
                         ),
                       ),
                     );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Task deleted')),
+                      SnackBar(
+                        content: Text(l10n?.taskDeleted ?? 'Task deleted'),
+                      ),
                     );
                   }
                 },
@@ -146,7 +153,10 @@ class TodoScreen extends ConsumerWidget {
           if (!success && context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(failure?.userMessage ?? 'Failed to add task'),
+                content: Text(
+                  failure?.userMessage ??
+                      (l10n?.failedToAddTask ?? 'Failed to add task'),
+                ),
               ),
             );
           }

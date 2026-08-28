@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/errors/failure.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/user_preferences.dart';
 import '../providers/user_preferences_notifier.dart';
 
@@ -19,9 +20,10 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferencesAsync = ref.watch(userPreferencesProvider);
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title: Text(l10n?.settingsTitle ?? 'Settings')),
       body: preferencesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(
@@ -31,7 +33,7 @@ class SettingsScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Failed to load settings',
+                  l10n?.failedToLoadSettings ?? 'Failed to load settings',
                   style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -44,7 +46,7 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 16),
                 FilledButton(
                   onPressed: () => ref.invalidate(userPreferencesProvider),
-                  child: const Text('Try again'),
+                  child: Text(l10n?.tryAgain ?? 'Try again'),
                 ),
               ],
             ),
@@ -54,21 +56,21 @@ class SettingsScreen extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           children: [
             SegmentedButton<UserThemeMode>(
-              segments: const [
+              segments: [
                 ButtonSegment<UserThemeMode>(
                   value: UserThemeMode.system,
-                  icon: Icon(Icons.brightness_auto_outlined),
-                  label: Text('System'),
+                  icon: const Icon(Icons.brightness_auto_outlined),
+                  label: Text(l10n?.themeSystem ?? 'System'),
                 ),
                 ButtonSegment<UserThemeMode>(
                   value: UserThemeMode.light,
-                  icon: Icon(Icons.light_mode_outlined),
-                  label: Text('Light'),
+                  icon: const Icon(Icons.light_mode_outlined),
+                  label: Text(l10n?.themeLight ?? 'Light'),
                 ),
                 ButtonSegment<UserThemeMode>(
                   value: UserThemeMode.dark,
-                  icon: Icon(Icons.dark_mode_outlined),
-                  label: Text('Dark Mode'),
+                  icon: const Icon(Icons.dark_mode_outlined),
+                  label: Text(l10n?.themeDark ?? 'Dark Mode'),
                 ),
               ],
               selected: {preferences.themeMode},
@@ -77,7 +79,7 @@ class SettingsScreen extends ConsumerWidget {
             ),
             const Divider(height: 24),
             SwitchListTile(
-              title: const Text('Notifications'),
+              title: Text(l10n?.notifications ?? 'Notifications'),
               secondary: const Icon(Icons.notifications_outlined),
               value: preferences.isNotificationsEnabled,
               onChanged: (value) async {
@@ -88,7 +90,9 @@ class SettingsScreen extends ConsumerWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        failure?.userMessage ?? 'Failed to update preferences',
+                        failure?.userMessage ??
+                            (l10n?.failedToUpdatePreferences ??
+                                'Failed to update preferences'),
                       ),
                     ),
                   );
@@ -110,9 +114,14 @@ class SettingsScreen extends ConsumerWidget {
         .read(userPreferencesProvider.notifier)
         .updateThemeMode(value);
     if (!success && context.mounted) {
+      final l10n = AppLocalizations.of(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(failure?.userMessage ?? 'Failed to update theme mode'),
+          content: Text(
+            failure?.userMessage ??
+                (l10n?.failedToUpdateThemeMode ??
+                    'Failed to update theme mode'),
+          ),
         ),
       );
     }
