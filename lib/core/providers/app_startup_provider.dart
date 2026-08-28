@@ -12,6 +12,5 @@ part 'app_startup_provider.g.dart';
 Future<void> appStartup(Ref ref) async {
   ref.onDispose(() {});
 
-  // Await local database initialization
   await ref.watch(isarDbProvider.future);
 }
