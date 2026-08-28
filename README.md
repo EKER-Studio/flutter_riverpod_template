@@ -1,4 +1,12 @@
-# 🚀 Flutter GitHub Template — Clean Architecture, Riverpod 3.x & Isar Community (v1.0.0)
+# 🚀 Flutter GitHub Template — Clean Architecture, Riverpod 3.x & Isar Community (v1.1.0)
+
+[![Release](https://img.shields.io/badge/Release-v1.1.0-blue.svg)](CHANGELOG.md)
+[![Flutter](https://img.shields.io/badge/Flutter-3.47+-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.12+-0175C2?logo=dart&logoColor=white)](https://dart.dev)
+[![State](https://img.shields.io/badge/State-Riverpod_3.x-0553B1)](https://riverpod.dev)
+[![Database](https://img.shields.io/badge/Database-Isar_Community-00B4D8)](https://isar-community.dev)
+[![Routing](https://img.shields.io/badge/Routing-GoRouter-teal)](https://pub.dev/packages/go_router)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A razor-sharp, minimalist, production-ready Flutter GitHub Template frozen strictly around 3 core pillars:
 1. **Clean Architecture** (Feature-First)
@@ -89,5 +97,8 @@ flutter analyze
 flutter test
 ```
 
+---
 
+## 📜 Changelog
 
+All notable changes, architectural enhancements, and release notes are documented in [CHANGELOG.md](CHANGELOG.md).
