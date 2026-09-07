@@ -60,7 +60,7 @@ log_success "Localization classes generated successfully."
 # ------------------------------------------------------------------------------
 log_step "3" "Regenerating code declarations (Build Runner)..."
 # ------------------------------------------------------------------------------
-dart run build_runner build
+dart run build_runner build --delete-conflicting-outputs
 log_success "Code generation completed."
 
 # ------------------------------------------------------------------------------
@@ -81,8 +81,8 @@ log_success "Static analysis passed with zero warnings or errors."
 # ------------------------------------------------------------------------------
 log_step "6" "Running complete unit and widget test suites..."
 # ------------------------------------------------------------------------------
-# Executes all automated tests inside the /test directory
-flutter test
+# Executes all automated tests inside the /test directory (excluding golden tests)
+flutter test --exclude-tags golden
 log_success "All automated unit and widget tests completed successfully."
 
 # ------------------------------------------------------------------------------

@@ -7,9 +7,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter_riverpod_boilerplate/core/errors/failure.dart';
 import 'package:flutter_riverpod_boilerplate/features/todos/domain/entities/todo.dart';
 import 'package:flutter_riverpod_boilerplate/features/todos/domain/repositories/todo_repository.dart';
+import 'package:flutter_riverpod_boilerplate/features/todos/data/providers/todo_repository_provider.dart';
 import 'package:flutter_riverpod_boilerplate/features/todos/presentation/providers/todo_detail_notifier.dart';
 import 'package:flutter_riverpod_boilerplate/features/todos/presentation/providers/todo_notifier.dart';
-import 'package:flutter_riverpod_boilerplate/features/todos/presentation/providers/todo_repository_provider.dart';
 
 // Mock repository based on the domain interface — completely decoupled from Isar
 class MockTodoRepository extends Mock implements TodoRepository {}

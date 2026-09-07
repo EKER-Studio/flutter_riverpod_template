@@ -9,17 +9,11 @@ part of 'user_preferences_repository_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 /// Provides a persistent singleton instance of [UserPreferencesRepository] backed by Isar.
-///
-/// Takes a [ref] to read the global [isarProvider] dependency.
-/// Returns the concrete [UserPreferencesRepositoryImpl] implementation for preferences storage operations.
 
 @ProviderFor(userPreferencesRepository)
 final userPreferencesRepositoryProvider = UserPreferencesRepositoryProvider._();
 
 /// Provides a persistent singleton instance of [UserPreferencesRepository] backed by Isar.
-///
-/// Takes a [ref] to read the global [isarProvider] dependency.
-/// Returns the concrete [UserPreferencesRepositoryImpl] implementation for preferences storage operations.
 
 final class UserPreferencesRepositoryProvider
     extends
@@ -30,9 +24,6 @@ final class UserPreferencesRepositoryProvider
         >
     with $Provider<UserPreferencesRepository> {
   /// Provides a persistent singleton instance of [UserPreferencesRepository] backed by Isar.
-  ///
-  /// Takes a [ref] to read the global [isarProvider] dependency.
-  /// Returns the concrete [UserPreferencesRepositoryImpl] implementation for preferences storage operations.
   UserPreferencesRepositoryProvider._()
     : super(
         from: null,

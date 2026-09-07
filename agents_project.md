@@ -15,7 +15,7 @@ minimal l10n blueprint.*
 | `dart format lib test` | Format code |
 | `flutter analyze` | Static analysis |
 | `flutter test` | Run tests (`--tags=golden` to run golden tests only) |
-| `bash before_push.sh` | Full pre-push pipeline |
+| `bash scripts/before_push.sh` | Full pre-push pipeline |
 
 ### Architecture & Layer Boundaries
 Feature-First Clean Architecture under `lib/features/<feature>/`. Two features currently exist: `todos`
