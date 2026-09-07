@@ -11,12 +11,9 @@ import '../providers/user_preferences_notifier.dart';
 /// Displays theme mode selectors and notification switches, allowing users to modify
 /// application settings backed by [userPreferencesProvider].
 class SettingsScreen extends ConsumerWidget {
-  /// Creates a new [SettingsScreen] widget instance.
+  /// Creates a settings screen widget instance.
   const SettingsScreen({super.key});
 
-  /// Builds the settings screen layout displaying controls for theme mode and notifications.
-  ///
-  /// Takes a build [context] and Riverpod widget [ref] to listen for preference state changes.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferencesAsync = ref.watch(userPreferencesProvider);

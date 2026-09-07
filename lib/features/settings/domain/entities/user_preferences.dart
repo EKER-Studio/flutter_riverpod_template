@@ -15,7 +15,7 @@ enum UserThemeMode {
 /// Encapsulates preferences such as theme selection and notification toggles,
 /// keeping domain business rules completely independent of persistence layers.
 class UserPreferences {
-  /// Creates a [UserPreferences] instance with the specified [themeMode] and [isNotificationsEnabled] settings.
+  /// Creates user preferences with explicit [themeMode] and [isNotificationsEnabled] values.
   const UserPreferences({
     required this.themeMode,
     required this.isNotificationsEnabled,
@@ -36,9 +36,6 @@ class UserPreferences {
   final bool isNotificationsEnabled;
 
   /// Creates a copy of this [UserPreferences] instance with specified fields replaced.
-  ///
-  /// Optional parameters [themeMode] and [isNotificationsEnabled] override existing
-  /// preference values if provided.
   UserPreferences copyWith({
     UserThemeMode? themeMode,
     bool? isNotificationsEnabled,
@@ -50,7 +47,6 @@ class UserPreferences {
     );
   }
 
-  /// Determines equality between this [UserPreferences] instance and [other].
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
@@ -59,7 +55,6 @@ class UserPreferences {
             other.isNotificationsEnabled == isNotificationsEnabled;
   }
 
-  /// Computes the hash code based on [themeMode] and [isNotificationsEnabled].
   @override
   int get hashCode => Object.hash(themeMode, isNotificationsEnabled);
 }

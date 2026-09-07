@@ -12,7 +12,7 @@ import '../models/user_preferences_model.dart';
 /// Manages singleton user settings state in Isar database transactions and converts
 /// raw storage models to domain [UserPreferences] entities.
 class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
-  /// Creates a new [UserPreferencesRepositoryImpl] with the provided [_isar] database instance.
+  /// Creates a preferences repository instance backed by the given [_isar] database.
   UserPreferencesRepositoryImpl(this._isar);
 
   final Isar _isar;
@@ -55,8 +55,6 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
 
   /// Fetches the current user preferences snapshot.
   ///
-  /// Returns a [Future] completing with the current [UserPreferences] entity.
-  ///
   /// Throws [DatabaseFailure] if reading user preferences from storage fails.
   @override
   Future<UserPreferences> get() async {
@@ -71,9 +69,6 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
   }
 
   /// Updates the application theme setting to [themeMode].
-  ///
-  /// Returns a [Future] completing with a [CommandResult] indicating whether updating
-  /// preferences succeeded or returning a [DatabaseFailure] on error.
   @override
   Future<CommandResult> updateThemeMode(UserThemeMode themeMode) async {
     try {
@@ -91,9 +86,6 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
   }
 
   /// Updates whether application notifications are enabled to [isEnabled].
-  ///
-  /// Returns a [Future] completing with a [CommandResult] indicating whether updating
-  /// preferences succeeded or returning a [DatabaseFailure] on error.
   @override
   Future<CommandResult> updateNotificationsEnabled(bool isEnabled) async {
     try {

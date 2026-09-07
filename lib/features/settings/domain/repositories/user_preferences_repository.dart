@@ -1,4 +1,3 @@
-import '../../../../core/errors/failure.dart';
 import '../../../../core/errors/result.dart';
 import '../entities/user_preferences.dart';
 
@@ -14,19 +13,11 @@ abstract class UserPreferencesRepository {
   Stream<UserPreferences> watch();
 
   /// Gets the current snapshot of user preferences.
-  ///
-  /// Returns a [Future] completing with the active [UserPreferences].
   Future<UserPreferences> get();
 
   /// Updates the theme mode setting to [themeMode].
-  ///
-  /// Returns a [Future] completing with a [CommandResult] indicating whether the update
-  /// succeeded or returning a [Failure] on error.
   Future<CommandResult> updateThemeMode(UserThemeMode themeMode);
 
   /// Updates whether notifications are enabled to [isEnabled].
-  ///
-  /// Returns a [Future] completing with a [CommandResult] indicating whether the update
-  /// succeeded or returning a [Failure] on error.
   Future<CommandResult> updateNotificationsEnabled(bool isEnabled);
 }
