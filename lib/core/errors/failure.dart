@@ -3,7 +3,6 @@
 /// Provides abstract and concrete failure representations that decouple UI and business
 /// logic from technical database or framework-specific exception details.
 sealed class Failure {
-  /// Abstract constructor for [Failure] taking a descriptive [message].
   const Failure(this.message);
 
   /// A human-readable description of the failure for logging and diagnostic purposes.
@@ -12,7 +11,7 @@ sealed class Failure {
 
 /// Failure originating from a local database or persistence operation.
 class DatabaseFailure extends Failure {
-  /// Creates a [DatabaseFailure] with the given error [message].
+  /// Creates a database failure instance with the underlying error [message].
   const DatabaseFailure(super.message);
 }
 

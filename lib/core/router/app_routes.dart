@@ -9,7 +9,6 @@ enum AppRoute {
   /// User preferences and settings screen route.
   settings('/settings', 'settings');
 
-  /// Creates an [AppRoute] enum value with its associated [path] and [name].
   const AppRoute(this.path, this.name);
 
   /// The URL path template for the route.

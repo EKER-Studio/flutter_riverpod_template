@@ -16,9 +16,6 @@ class App extends ConsumerWidget {
   /// Creates a new root [App] widget instance.
   const App({super.key});
 
-  /// Builds the top-level [MaterialApp] with reactive theme and router configuration.
-  ///
-  /// Takes a build [context] and Riverpod widget [ref] to watch theme and router preferences.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(userPreferencesProvider).value;
@@ -26,7 +23,10 @@ class App extends ConsumerWidget {
 
     return MaterialApp.router(
       routerConfig: router,
-      title: kDebugMode ? 'Flutter Blueprint (Dev)' : 'Flutter Blueprint',
+      onGenerateTitle: (context) {
+        final title = AppLocalizations.of(context)?.appTitle ?? 'Todo Flow';
+        return kDebugMode ? '$title (Dev)' : title;
+      },
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: AppTheme.lightTheme,

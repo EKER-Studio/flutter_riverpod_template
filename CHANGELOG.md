@@ -9,12 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Highlights & Features
 * **Declarative Routing (GoRouter):** Integrated `go_router` with centralized route definitions, eliminating direct cross-screen dependencies.
-* **Architecture Evolution:**
-  * **BLoC:** Introduced explicit Domain Use Cases layer and upgraded `AppThemeBloc` to `HydratedBloc` for automatic state persistence.
-  * **Riverpod:** Implemented `AppStartup` initialization pattern for async database pre-warming and modernized error handling via `CommandResult` / `DataResult` aliases.
-* **Environment & Flavor Isolation:** Added `AppConfig` runtime environment switching (`--dart-define=APP_ENV`) and automated `.dev` application ID suffixes for Android and iOS debug builds.
+* **Architecture Evolution:** Implemented `AppStartup` initialization pattern for async database pre-warming and modernized error handling via `Result` / `Failure` abstractions.
 * **Design System & Asset Pipeline:** Centralized `AppTheme`, adaptive icons, dynamic dark/light native splash screens, and asset normalization scripts.
-* **Hardened CI/CD & Build Integrity:** Added native Android Debug APK build verification and automatic artifact uploads on GitHub Actions.
+* **CI/CD & Pre-Push Pipeline:** Automated code generation verification, static analysis, custom Riverpod lints, and test execution on pull requests.
 * **AI-Native Tooling:** Added universal guardrail configs for Cline, Cursor (`.cursorrules`), Claude Code (`CLAUDE.md`), and Gemini (`GEMINI.md`).
 
 ## [1.0.0] - 2026-07-28

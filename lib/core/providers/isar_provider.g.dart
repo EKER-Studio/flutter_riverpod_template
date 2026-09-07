@@ -9,25 +9,16 @@ part of 'isar_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 /// Asynchronously initializes and provides the singleton [Isar] database instance.
-///
-/// Takes a [ref] to interact with the Riverpod framework dependency tree.
-/// Returns a [Future] completing with the opened [Isar] database.
 
 @ProviderFor(isarDb)
 final isarDbProvider = IsarDbProvider._();
 
 /// Asynchronously initializes and provides the singleton [Isar] database instance.
-///
-/// Takes a [ref] to interact with the Riverpod framework dependency tree.
-/// Returns a [Future] completing with the opened [Isar] database.
 
 final class IsarDbProvider
     extends $FunctionalProvider<AsyncValue<Isar>, Isar, FutureOr<Isar>>
     with $FutureModifier<Isar>, $FutureProvider<Isar> {
   /// Asynchronously initializes and provides the singleton [Isar] database instance.
-  ///
-  /// Takes a [ref] to interact with the Riverpod framework dependency tree.
-  /// Returns a [Future] completing with the opened [Isar] database.
   IsarDbProvider._()
     : super(
         from: null,
@@ -53,13 +44,11 @@ final class IsarDbProvider
   }
 }
 
-String _$isarDbHash() => r'10f88d1f272650465ec772e625666a845f48bab5';
+String _$isarDbHash() => r'03d3b50ad77f93c6796506e7248504a3a8a0d9c0';
 
 /// Provides the synchronous [Isar] database instance for repositories.
 ///
 /// Pre-warmed during application startup by `appStartupProvider`.
-/// Takes a [ref] to read the resolved [isarDbProvider] value.
-/// Returns the initialized [Isar] database instance.
 
 @ProviderFor(isar)
 final isarProvider = IsarProvider._();
@@ -67,16 +56,12 @@ final isarProvider = IsarProvider._();
 /// Provides the synchronous [Isar] database instance for repositories.
 ///
 /// Pre-warmed during application startup by `appStartupProvider`.
-/// Takes a [ref] to read the resolved [isarDbProvider] value.
-/// Returns the initialized [Isar] database instance.
 
 final class IsarProvider extends $FunctionalProvider<Isar, Isar, Isar>
     with $Provider<Isar> {
   /// Provides the synchronous [Isar] database instance for repositories.
   ///
   /// Pre-warmed during application startup by `appStartupProvider`.
-  /// Takes a [ref] to read the resolved [isarDbProvider] value.
-  /// Returns the initialized [Isar] database instance.
   IsarProvider._()
     : super(
         from: null,

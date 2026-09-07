@@ -3,13 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../providers/app_startup_provider.dart';
+import '../theme/app_theme.dart';
 
 /// Root initialization wrapper managing asynchronous service initialization state.
 ///
 /// Watches [appStartupProvider] and renders [onLoaded] upon successful setup,
 /// displaying a loading indicator or retryable error view during intermediate states.
 class AppStartupWidget extends ConsumerWidget {
-  /// Creates an [AppStartupWidget] with the given [onLoaded] builder.
+  /// Creates an initialization wrapper with an [onLoaded] child builder.
   const AppStartupWidget({super.key, required this.onLoaded});
 
   /// Widget builder executed when startup services are fully initialized.
@@ -32,21 +33,23 @@ class AppStartupWidget extends ConsumerWidget {
 
 /// Standalone loading screen displayed during asynchronous app initialization.
 class AppStartupLoadingWidget extends StatelessWidget {
-  /// Creates an [AppStartupLoadingWidget] instance.
+  /// Creates a standalone startup loading screen widget.
   const AppStartupLoadingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: Center(child: CircularProgressIndicator())),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      home: const Scaffold(body: Center(child: CircularProgressIndicator())),
     );
   }
 }
 
 /// Standalone error screen displayed when critical application startup services fail.
 class AppStartupErrorWidget extends StatelessWidget {
-  /// Creates an [AppStartupErrorWidget] with a descriptive [message] and [onRetry] callback.
+  /// Creates an error screen displaying [message] with an [onRetry] callback.
   const AppStartupErrorWidget({
     super.key,
     required this.message,
@@ -63,22 +66,25 @@ class AppStartupErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: Builder(
         builder: (innerContext) {
           final l10n = AppLocalizations.of(innerContext);
+          final colorScheme = Theme.of(innerContext).colorScheme;
           return Scaffold(
             body: Center(
-              child: Padding(
+              child: SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.error_outline,
                       size: 64,
-                      color: Colors.redAccent,
+                      color: colorScheme.error,
                     ),
                     const SizedBox(height: 16),
                     Text(
@@ -92,14 +98,17 @@ class AppStartupErrorWidget extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       message,
-                      style: const TextStyle(fontSize: 14, color: Colors.grey),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 24),
                     FilledButton.icon(
                       onPressed: onRetry,
                       icon: const Icon(Icons.refresh),
-                      label: Text(l10n?.tryAgain ?? 'Try Again'),
+                      label: Text(l10n?.tryAgain ?? 'Try again'),
                     ),
                   ],
                 ),

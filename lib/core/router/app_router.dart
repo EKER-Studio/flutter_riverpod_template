@@ -11,11 +11,7 @@ import 'app_routes.dart';
 
 part 'app_router.g.dart';
 
-/// Global Riverpod provider configuring the application [GoRouter] instance.
-///
-/// Takes a Riverpod [ref] to access global state providers.
-/// Returns a configured [GoRouter] with declarative routes, path parameters,
-/// and error handling.
+/// Configures the application [GoRouter] instance with declarative routes and error handling.
 @Riverpod(keepAlive: true)
 GoRouter appRouter(Ref ref) {
   return GoRouter(

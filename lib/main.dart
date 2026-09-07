@@ -10,8 +10,6 @@ import 'core/presentation/widgets/app_startup_widget.dart';
 ///
 /// Initializes Flutter bindings, sets up global error handling hooks via [runZonedGuarded],
 /// and launches [AppStartupWidget] inside the root [ProviderScope] to coordinate service initialization.
-///
-/// Returns a [Future] completing when initial setup is finished.
 Future<void> main() async {
   runZonedGuarded(
     () async {

@@ -10,7 +10,5 @@ part 'app_startup_provider.g.dart';
 /// Returns a [Future] completing when all startup services are initialized.
 @Riverpod(keepAlive: true)
 Future<void> appStartup(Ref ref) async {
-  ref.onDispose(() {});
-
   await ref.watch(isarDbProvider.future);
 }

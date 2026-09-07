@@ -8,29 +8,17 @@ part of 'app_router.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Global Riverpod provider configuring the application [GoRouter] instance.
-///
-/// Takes a Riverpod [ref] to access global state providers.
-/// Returns a configured [GoRouter] with declarative routes, path parameters,
-/// and error handling.
+/// Configures the application [GoRouter] instance with declarative routes and error handling.
 
 @ProviderFor(appRouter)
 final appRouterProvider = AppRouterProvider._();
 
-/// Global Riverpod provider configuring the application [GoRouter] instance.
-///
-/// Takes a Riverpod [ref] to access global state providers.
-/// Returns a configured [GoRouter] with declarative routes, path parameters,
-/// and error handling.
+/// Configures the application [GoRouter] instance with declarative routes and error handling.
 
 final class AppRouterProvider
     extends $FunctionalProvider<GoRouter, GoRouter, GoRouter>
     with $Provider<GoRouter> {
-  /// Global Riverpod provider configuring the application [GoRouter] instance.
-  ///
-  /// Takes a Riverpod [ref] to access global state providers.
-  /// Returns a configured [GoRouter] with declarative routes, path parameters,
-  /// and error handling.
+  /// Configures the application [GoRouter] instance with declarative routes and error handling.
   AppRouterProvider._()
     : super(
         from: null,
