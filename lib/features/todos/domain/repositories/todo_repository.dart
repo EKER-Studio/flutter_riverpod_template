@@ -1,4 +1,3 @@
-import '../../../../core/errors/failure.dart';
 import '../../../../core/errors/result.dart';
 import '../entities/todo.dart';
 
@@ -21,8 +20,6 @@ abstract class TodoRepository {
 
   /// Gets all todo items as a one-shot snapshot.
   ///
-  /// Returns a [Future] completing with a [List] of all current [Todo] entities.
-  ///
   /// Not currently called by any notifier — [watchAll] is used instead for
   /// reactive updates. Kept on the interface for one-shot use cases such as
   /// CSV/JSON export or pagination cursors, where a live stream isn't
@@ -30,20 +27,11 @@ abstract class TodoRepository {
   Future<List<Todo>> getAll();
 
   /// Adds a new todo item with the given [title].
-  ///
-  /// Returns a [Future] completing with a [CommandResult] indicating whether
-  /// creation succeeded or returning a [Failure] on error.
   Future<CommandResult> add({required String title});
 
   /// Toggles the completion status of a todo item identified by [id].
-  ///
-  /// Returns a [Future] completing with a [CommandResult] indicating whether
-  /// the operation succeeded or returning a [Failure] on error.
   Future<CommandResult> toggleCompleted({required int id});
 
   /// Deletes a todo item identified by [id].
-  ///
-  /// Returns a [Future] completing with a [CommandResult] indicating whether
-  /// deletion succeeded or returning a [Failure] on error.
   Future<CommandResult> delete({required int id});
 }

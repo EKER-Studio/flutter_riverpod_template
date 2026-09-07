@@ -12,7 +12,7 @@ import '../models/todo_model.dart';
 /// Encapsulates all Isar database transactions, query subscriptions, and data mapping logic
 /// for todo item storage operations.
 class TodoRepositoryImpl implements TodoRepository {
-  /// Creates a new [TodoRepositoryImpl] with the provided [_isar] database instance.
+  /// Creates a todo repository instance backed by the given [_isar] database.
   TodoRepositoryImpl(this._isar);
 
   final Isar _isar;
@@ -55,8 +55,6 @@ class TodoRepositoryImpl implements TodoRepository {
 
   /// Retrieves a snapshot of all todo items stored in the database.
   ///
-  /// Returns a [Future] completing with a list of all [Todo] entities ordered by creation date descending.
-  ///
   /// Throws [DatabaseFailure] if a database reading error occurs.
   @override
   Future<List<Todo>> getAll() async {
@@ -72,9 +70,6 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   /// Adds a new todo item with the given [title].
-  ///
-  /// Returns a [Future] completing with a [CommandResult] indicating whether database
-  /// insertion succeeded or returning a [DatabaseFailure] on error.
   @override
   Future<CommandResult> add({required String title}) async {
     try {
@@ -94,9 +89,6 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   /// Toggles the completion status of a todo item identified by [id].
-  ///
-  /// Returns a [Future] completing with a [CommandResult] containing `true` if updated,
-  /// or returning a [DatabaseFailure] if [id] does not exist or a storage error occurs.
   @override
   Future<CommandResult> toggleCompleted({required int id}) async {
     try {
@@ -123,9 +115,6 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   /// Deletes a todo item identified by [id] from Isar storage.
-  ///
-  /// Returns a [Future] completing with a [CommandResult] indicating whether deletion
-  /// succeeded or returning a [DatabaseFailure] on error.
   @override
   Future<CommandResult> delete({required int id}) async {
     try {

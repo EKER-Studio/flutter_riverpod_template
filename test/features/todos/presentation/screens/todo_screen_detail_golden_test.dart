@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_riverpod_boilerplate/features/todos/domain/entities/todo.dart';
 import 'package:flutter_riverpod_boilerplate/features/todos/presentation/providers/todo_detail_notifier.dart';
-import 'package:flutter_riverpod_boilerplate/features/todos/presentation/providers/todo_repository_provider.dart';
+import 'package:flutter_riverpod_boilerplate/features/todos/data/providers/todo_repository_provider.dart';
 import 'package:flutter_riverpod_boilerplate/features/todos/presentation/screens/todo_screen_detail.dart';
 import 'package:flutter_riverpod_boilerplate/l10n/app_localizations.dart';
 
@@ -57,6 +57,7 @@ void main() {
             ).overrideWith(() => LoadingTodoDetailNotifier()),
           ],
           child: const MaterialApp(
+            locale: Locale('en'),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: TodoDetailScreen(todoId: 1),
@@ -87,6 +88,7 @@ void main() {
             todoDetailProvider(1).overrideWith(() => ErrorTodoDetailNotifier()),
           ],
           child: const MaterialApp(
+            locale: Locale('en'),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: TodoDetailScreen(todoId: 1),
@@ -113,6 +115,7 @@ void main() {
         ProviderScope(
           overrides: [todoRepositoryProvider.overrideWithValue(repository)],
           child: const MaterialApp(
+            locale: Locale('en'),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: TodoDetailScreen(todoId: 999),
@@ -150,6 +153,7 @@ void main() {
         ProviderScope(
           overrides: [todoRepositoryProvider.overrideWithValue(repository)],
           child: const MaterialApp(
+            locale: Locale('en'),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: TodoDetailScreen(todoId: 1),
@@ -187,6 +191,7 @@ void main() {
         ProviderScope(
           overrides: [todoRepositoryProvider.overrideWithValue(repository)],
           child: const MaterialApp(
+            locale: Locale('en'),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: TodoDetailScreen(todoId: 2),

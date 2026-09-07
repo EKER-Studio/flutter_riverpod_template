@@ -8,8 +8,6 @@ class AddTodoFab extends StatelessWidget {
   const AddTodoFab({super.key, required this.onAdd});
 
   /// Async callback executed when a new todo title is submitted from the dialog.
-  ///
-  /// Receives the user-entered task title string.
   final Future<void> Function(String title) onAdd;
 
   Future<void> _showAddDialog(BuildContext context) async {
@@ -23,9 +21,6 @@ class AddTodoFab extends StatelessWidget {
     }
   }
 
-  /// Builds the floating action button widget.
-  ///
-  /// Takes the widget build [context].
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -67,22 +62,24 @@ class _AddTodoDialogState extends State<_AddTodoDialog> {
 
     return AlertDialog(
       title: Text(l10n?.newTaskDialogTitle ?? 'New Task'),
-      content: Form(
-        key: _formKey,
-        child: TextFormField(
-          controller: _controller,
-          autofocus: true,
-          decoration: InputDecoration(
-            labelText: l10n?.taskTitleLabel ?? 'Title',
-            hintText: l10n?.taskTitleHint ?? 'E.g. Buy milk',
+      content: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: TextFormField(
+            controller: _controller,
+            autofocus: true,
+            decoration: InputDecoration(
+              labelText: l10n?.taskTitleLabel ?? 'Title',
+              hintText: l10n?.taskTitleHint ?? 'E.g. Buy milk',
+            ),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return l10n?.titleCannotBeEmpty ?? 'Title cannot be empty';
+              }
+              return null;
+            },
+            onFieldSubmitted: (_) => _submit(),
           ),
-          validator: (value) {
-            if (value == null || value.trim().isEmpty) {
-              return l10n?.titleCannotBeEmpty ?? 'Title cannot be empty';
-            }
-            return null;
-          },
-          onFieldSubmitted: (_) => _submit(),
         ),
       ),
       actions: [

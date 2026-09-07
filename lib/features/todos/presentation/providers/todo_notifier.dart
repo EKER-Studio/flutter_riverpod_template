@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/errors/result.dart';
 import '../../domain/entities/todo.dart';
-import 'todo_repository_provider.dart';
+import '../../data/providers/todo_repository_provider.dart';
 
 part 'todo_notifier.g.dart';
 
@@ -15,9 +15,6 @@ part 'todo_notifier.g.dart';
 /// for creating, toggling, and deleting todo entities.
 @riverpod
 class TodoList extends _$TodoList {
-  /// Initializes the notifier by watching all todo items from [todoRepositoryProvider].
-  ///
-  /// Returns a continuous [Stream] emitting lists of [Todo] entities whenever the storage changes.
   @override
   Stream<List<Todo>> build() {
     final repository = ref.watch(todoRepositoryProvider);
@@ -37,15 +34,11 @@ class TodoList extends _$TodoList {
   }
 
   /// Toggles the completion status of a todo item identified by [id].
-  ///
-  /// Returns a [Future] completing with a [CommandResult] indicating whether the status update succeeded.
   Future<CommandResult> toggleTodo(int id) async {
     return await ref.read(todoRepositoryProvider).toggleCompleted(id: id);
   }
 
   /// Deletes a todo item identified by [id].
-  ///
-  /// Returns a [Future] completing with a [CommandResult] indicating whether deletion succeeded.
   Future<CommandResult> deleteTodo(int id) async {
     return await ref.read(todoRepositoryProvider).delete(id: id);
   }

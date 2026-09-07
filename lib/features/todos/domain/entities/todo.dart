@@ -3,7 +3,7 @@
 /// Encapsulates core business data and state for task management, remaining decoupled
 /// from data storage implementations and UI frameworks.
 class Todo {
-  /// Creates a [Todo] instance with the specified [id], [title], [isCompleted], and [createdAt] values.
+  /// Creates a todo entity instance with the specified properties.
   const Todo({
     required this.id,
     required this.title,
@@ -24,9 +24,6 @@ class Todo {
   final DateTime createdAt;
 
   /// Creates a copy of this [Todo] with the given fields replaced with new values.
-  ///
-  /// Optional parameters [id], [title], [isCompleted], and [createdAt] override
-  /// existing values if supplied.
   Todo copyWith({
     int? id,
     String? title,
@@ -41,7 +38,6 @@ class Todo {
     );
   }
 
-  /// Determines equality between this [Todo] instance and [other].
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
@@ -52,7 +48,6 @@ class Todo {
             other.createdAt == createdAt;
   }
 
-  /// Computes the hash code based on [id], [title], [isCompleted], and [createdAt].
   @override
   int get hashCode => Object.hash(id, title, isCompleted, createdAt);
 }

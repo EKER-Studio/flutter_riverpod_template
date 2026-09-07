@@ -14,12 +14,9 @@ import '../widgets/todo_list_item.dart';
 /// Displays reactive task lists managed by [todoListProvider], provides swipe-to-delete
 /// capability, and allows navigation to settings or task creation dialogs.
 class TodoScreen extends ConsumerWidget {
-  /// Creates a new [TodoScreen] widget instance.
+  /// Creates a todo overview screen widget instance.
   const TodoScreen({super.key});
 
-  /// Builds the [Scaffold] containing the todo app bar, reactive list body, and FAB.
-  ///
-  /// Takes a build [context] and Riverpod widget [ref] to listen for state changes.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todosAsync = ref.watch(todoListProvider);

@@ -11,7 +11,7 @@ import '../../domain/entities/todo.dart';
 /// Features interactive checkbox toggling, swipe-to-delete dismissal, and tap navigation
 /// to the detail screen for the given [todo].
 class TodoListItem extends StatelessWidget {
-  /// Creates a [TodoListItem] widget for the given [todo] with [onToggle] and [onDelete] callbacks.
+  /// Creates a list tile displaying [todo] with action callbacks.
   const TodoListItem({
     super.key,
     required this.todo,
@@ -32,9 +32,6 @@ class TodoListItem extends StatelessWidget {
   /// Optional custom callback executed on tap, overriding default GoRouter navigation.
   final VoidCallback? onTap;
 
-  /// Builds the dismissible list tile widget.
-  ///
-  /// Takes the widget build [context].
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);

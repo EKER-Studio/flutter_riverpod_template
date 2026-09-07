@@ -3,9 +3,7 @@ import '../models/todo_model.dart';
 
 /// Synchronous data mapping extensions for converting [TodoModel] data transfers to domain entities.
 extension TodoModelMapper on TodoModel {
-  /// Converts this persistent [TodoModel] instance into a clean domain [Todo] entity.
-  ///
-  /// Returns a new immutable [Todo] containing mapped values.
+  /// Converts this persistent [TodoModel] instance into a domain [Todo] entity.
   Todo toEntity() {
     return Todo(
       id: id,
@@ -18,9 +16,7 @@ extension TodoModelMapper on TodoModel {
 
 /// Synchronous data mapping extensions for converting domain [Todo] entities to persistent models.
 extension TodoEntityMapper on Todo {
-  /// Converts this domain [Todo] entity into an Isar-compatible [TodoModel] database object.
-  ///
-  /// Returns a new [TodoModel] populated with entity property values.
+  /// Converts this domain [Todo] entity into an Isar [TodoModel] database object.
   TodoModel toModel() {
     return TodoModel()
       ..id = id

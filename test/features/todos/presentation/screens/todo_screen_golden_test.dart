@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_riverpod_boilerplate/app.dart';
-import 'package:flutter_riverpod_boilerplate/features/settings/presentation/providers/user_preferences_repository_provider.dart';
-import 'package:flutter_riverpod_boilerplate/features/todos/presentation/providers/todo_repository_provider.dart';
+import 'package:flutter_riverpod_boilerplate/features/settings/data/providers/user_preferences_repository_provider.dart';
+import 'package:flutter_riverpod_boilerplate/features/todos/data/providers/todo_repository_provider.dart';
 
 import '../../../../helpers/fake_todo_repository.dart';
 import '../../../../helpers/fake_user_preferences_repository.dart';
@@ -35,6 +35,7 @@ void main() {
       // 1. Freeze device dimensions (e.g., standard phone profile, 1080x2400)
       tester.view.physicalSize = const Size(1080, 2400);
       tester.view.devicePixelRatio = 3.0;
+      tester.platformDispatcher.localesTestValue = const [Locale('en')];
 
       // 2. Build widget with injected fake repository
       await tester.pumpWidget(
@@ -61,11 +62,13 @@ void main() {
       // Cleanup after test
       tester.view.resetPhysicalSize();
       tester.view.resetDevicePixelRatio();
+      tester.platformDispatcher.clearLocalesTestValue();
     }, skip: !Platform.isMacOS);
 
     testWidgets('Populated list state', (tester) async {
       tester.view.physicalSize = const Size(1080, 2400);
       tester.view.devicePixelRatio = 3.0;
+      tester.platformDispatcher.localesTestValue = const [Locale('en')];
 
       // Add deterministic tasks using the frozen clock
       await repository.add(title: 'Write documentation');
@@ -92,6 +95,7 @@ void main() {
 
       tester.view.resetPhysicalSize();
       tester.view.resetDevicePixelRatio();
+      tester.platformDispatcher.clearLocalesTestValue();
     });
   }, skip: !Platform.isMacOS);
 }

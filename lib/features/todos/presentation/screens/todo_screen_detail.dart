@@ -11,15 +11,12 @@ import '../providers/todo_detail_notifier.dart';
 /// Watches [todoDetailProvider] for the target [todoId] and displays completion status
 /// and formatted creation timestamps.
 class TodoDetailScreen extends ConsumerWidget {
-  /// Creates a [TodoDetailScreen] widget targeting the specified [todoId].
+  /// Creates a detail screen displaying the todo corresponding to [todoId].
   const TodoDetailScreen({super.key, required this.todoId});
 
   /// The unique identifier of the target todo item to display.
   final int todoId;
 
-  /// Builds the detail screen layout corresponding to the current state of [todoId].
-  ///
-  /// Takes a build [context] and Riverpod widget [ref] to watch state changes.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todoAsync = ref.watch(todoDetailProvider(todoId));
@@ -82,7 +79,9 @@ class TodoDetailScreen extends ConsumerWidget {
                 icon: todo.isCompleted
                     ? Icons.check_circle
                     : Icons.radio_button_unchecked,
-                iconColor: todo.isCompleted ? Colors.green : Colors.grey,
+                iconColor: todo.isCompleted
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.onSurfaceVariant,
                 label: l10n?.statusLabel ?? 'Status',
                 value: todo.isCompleted
                     ? (l10n?.statusCompleted ?? 'Completed')
@@ -111,7 +110,11 @@ class TodoDetailScreen extends ConsumerWidget {
   }) {
     return Row(
       children: [
-        Icon(icon, size: 24, color: iconColor ?? Colors.grey),
+        Icon(
+          icon,
+          size: 24,
+          color: iconColor ?? Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
         const SizedBox(width: 16),
         Expanded(
           child: Column(
