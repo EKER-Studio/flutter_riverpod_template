@@ -1,4 +1,4 @@
-# Project-Specific Rules — flutter_riverpod_boilerplate (v1.1.0)
+# Project-Specific Rules — flutter_riverpod_boilerplate (v1.2.0)
 
 *Companion to `AGENTS.md`. Save this file as `agents_project.md` in this repo's root, next to `AGENTS.md`.
 Frozen strictly around 3 pillars: Clean Architecture, Riverpod 3.x, and Isar Community, with an integrated
