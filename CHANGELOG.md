@@ -5,6 +5,57 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-09-18
+
+### Release v1.3.0 — Production Hardening, Store Readiness & DX Optimization
+
+Comprehensive milestone release upgrading the Riverpod starter template with production resilience, store-ready UI components, automated screenshot testing, CI/CD artifact generation, and developer tooling optimizations.
+
+Compare: [`v1.2.0...v1.3.0`](https://github.com/EKER-Studio/flutter_riverpod_boilerplate/compare/v1.2.0...v1.3.0)
+
+#### 🚀 Highlights & Features
+
+* **Tooling, Linter & Build Optimization (DX):**
+  * Modernized `analysis_options.yaml` with 40+ strict analyzer rules (`avoid_void_async`, `directives_ordering`, `prefer_const_*`, unawaited futures enforcement) and excluded generated schema files.
+  * Scoped code generation in `build.yaml` (`isar_community_generator` restricted to `data/**`, `riverpod_generator` scoped to presentation and data providers) speeding up build runner by 3–5×.
+  * Pinned SDK constraints to `^3.12.2` and locked Flutter SDK version via `.flutter-version` (3.47.4).
+  * Introduced centralized structured logging via `AppLogger` (`lib/core/utils/app_logger.dart`) wrapping `dart:developer.log` with log severity levels and automatic release mode filtering.
+  * Expanded Failure hierarchy (`ValidationFailure`, `NotFoundFailure`, `NetworkFailure`, `UnauthorizedFailure`, `DatabaseFailure`) with UI presentation mapping.
+
+* **CI/CD & Verification Scripts:**
+  * Revamped `scripts/before_push.sh` with ANSI color formatting, step timing benchmarks, multi-directory formatting (`lib`, `test`, `integration_test`, `test_driver`), and test tag exclusions (`golden,screenshot`).
+  * Enhanced GitHub Actions CI workflow ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) with Gradle caching, `.flutter-version` synchronization, and debug APK build verification.
+  * Upgraded Release workflow ([`.github/workflows/release.yml`](.github/workflows/release.yml)) to build Android App Bundles (`.aab`) alongside APKs, uploading ProGuard mapping symbols and publishing GitHub Releases automatically on `v*` tags.
+
+* **Core Resilience, Bootstrap & Lifecycle:**
+  * Implemented robust bootstrap error handling in `lib/main.dart` with edge-to-edge mode, system UI overlay configuration, Flutter/platform dispatcher error hooks, and an `AppInitializationErrorScreen` fallback.
+  * Integrated global `AppProviderObserver` for unhandled error logging and state transition diagnostics across all Riverpod providers.
+  * Added on-device rotating crash log file (`crash_log.txt`, 1 MB limit) managed by `AppCrashReporter`.
+  * Guarded typography in `lib/app.dart` by clamping `textScaler` between `0.85` and `2.0`.
+  * Added cryptographic `FieldCipher` utility (`lib/core/utils/field_cipher.dart`) implementing AES-256-CBC + HMAC-SHA256 Encrypt-then-MAC with constant-time verification.
+
+* **Design System, Accessibility & UI Primitives:**
+  * Added responsive layout tokens (`lib/core/presentation/theme/app_layout_tokens.dart`) with `ContextLayout` extensions for phones, foldables, tablets, and desktop viewports.
+  * Introduced `ClampedLayout` widget preventing view stretching on wide screens.
+  * Added semantic feedback theming (`AppFeedbackTheme`) and floating `AppSnackBar` with status icons for Success, Error, Warning, and Info states.
+  * Created accessible `StateMessageCard` component for empty, welcome, and error views with action buttons (`AppEmptyView`, `AppErrorView`).
+  * Added string utility extension `capitalizeFirst()`.
+
+* **Store-Ready Compliance & In-App Legal Screens:**
+  * Built accessible settings components (`CustomSettingsTile`, `CustomSettingsToggle`, `SectionHeader`, `ThemeSelectionDialog`) with full accessibility semantics.
+  * Added in-app Open Source Licenses screen (`LicensesScreen`) with searchable package list.
+  * Added in-app Privacy Policy screen (`PrivacyPolicyScreen`) with external legal link launching via `url_launcher`.
+  * Added top-level `SECURITY.md` and offline `doc/privacy_policy.md` documents.
+  * Surfaced dynamic app version and build metadata via `package_info_plus`.
+
+* **Platform Configurations (Android & iOS):**
+  * Android: Added `proguard-rules.pro` keeping Isar native bindings and JNI callbacks; enabled `coreLibraryDesugaring` in `build.gradle.kts`; configured release R8 minification, resource shrinking, and ABI/language bundle splits.
+  * iOS: Normalized deployment target to `14.0` across `Podfile` post_install hook.
+
+* **Automated Screenshot Testing:**
+  * Added automated integration test harness in `integration_test/app_screenshots_test.dart` for capturing App Store / Google Play marketing screenshots across English and Polish locales.
+  * Added screenshot execution scripts in `scripts/screenshots/generate_screenshots.sh` and `scripts/screenshots/run_screenshot_target.sh`.
+
 ## [1.2.0] - 2026-09-08
 
 ### 🚀 Highlights & Features

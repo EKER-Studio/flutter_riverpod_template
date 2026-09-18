@@ -46,7 +46,7 @@ final class UserPreferencesNotifierProvider
 }
 
 String _$userPreferencesNotifierHash() =>
-    r'1775f38cd5d15cb3f8d6b895c449c88eea8c0fa1';
+    r'dbde4b27cab4be51f7106c09f92506e4a1fe8901';
 
 /// Riverpod state notifier managing the application's user preferences state.
 ///
