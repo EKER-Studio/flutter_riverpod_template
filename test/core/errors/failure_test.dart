@@ -7,6 +7,30 @@ void main() {
       const failure = DatabaseFailure('DB error');
       expect(failure.message, 'DB error');
     });
+
+    test('NotFoundFailure holds message correctly', () {
+      const failure = NotFoundFailure('Not found');
+      expect(failure.message, 'Not found');
+    });
+
+    test('NetworkFailure holds message correctly', () {
+      const failure = NetworkFailure('Network error');
+      expect(failure.message, 'Network error');
+    });
+
+    test('UnauthorizedFailure holds message correctly', () {
+      const failure = UnauthorizedFailure('Unauthorized');
+      expect(failure.message, 'Unauthorized');
+    });
+
+    test('ValidationFailure holds message and field errors correctly', () {
+      const failure = ValidationFailure(
+        'Validation failed',
+        fieldErrors: {'email': 'Invalid email'},
+      );
+      expect(failure.message, 'Validation failed');
+      expect(failure.fieldErrors['email'], 'Invalid email');
+    });
   });
 
   group('FailureUserMessage extension', () {
