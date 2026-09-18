@@ -12,14 +12,11 @@ class MockIsar extends Mock implements Isar {
   Object? writeTxnException;
 
   @override
-  Future<T> writeTxn<T>(
-    Future<T> Function() callback, {
-    bool silent = false,
-  }) async {
+  Future<T> writeTxn<T>(Future<T> Function() callback, {bool silent = false}) {
     if (writeTxnException != null) {
       throw writeTxnException!;
     }
-    return await callback();
+    return callback();
   }
 }
 

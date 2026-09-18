@@ -30,16 +30,16 @@ class TodoList extends _$TodoList {
     if (trimmedTitle.isEmpty) {
       return (false, const DatabaseFailure('Title cannot be empty'));
     }
-    return await ref.read(todoRepositoryProvider).add(title: trimmedTitle);
+    return ref.read(todoRepositoryProvider).add(title: trimmedTitle);
   }
 
   /// Toggles the completion status of a todo item identified by [id].
-  Future<CommandResult> toggleTodo(int id) async {
-    return await ref.read(todoRepositoryProvider).toggleCompleted(id: id);
+  Future<CommandResult> toggleTodo(int id) {
+    return ref.read(todoRepositoryProvider).toggleCompleted(id: id);
   }
 
   /// Deletes a todo item identified by [id].
-  Future<CommandResult> deleteTodo(int id) async {
-    return await ref.read(todoRepositoryProvider).delete(id: id);
+  Future<CommandResult> deleteTodo(int id) {
+    return ref.read(todoRepositoryProvider).delete(id: id);
   }
 }

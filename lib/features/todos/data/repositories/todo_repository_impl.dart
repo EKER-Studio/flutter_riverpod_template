@@ -31,7 +31,7 @@ class TodoRepositoryImpl implements TodoRepository {
         .watch(fireImmediately: true)
         .map((models) => models.map((m) => m.toEntity()).toList())
         .handleError((Object error, StackTrace stack) {
-          throw DatabaseFailure('Failed to watch todos: ${error.toString()}');
+          throw DatabaseFailure('Failed to watch todos: $error');
         });
   }
 
@@ -47,9 +47,7 @@ class TodoRepositoryImpl implements TodoRepository {
         .watchObject(id, fireImmediately: true)
         .map((model) => model?.toEntity())
         .handleError((Object error, StackTrace stack) {
-          throw DatabaseFailure(
-            'Failed to watch todo $id: ${error.toString()}',
-          );
+          throw DatabaseFailure('Failed to watch todo $id: $error');
         });
   }
 
@@ -65,7 +63,7 @@ class TodoRepositoryImpl implements TodoRepository {
           .findAll();
       return models.map((m) => m.toEntity()).toList();
     } catch (e) {
-      throw DatabaseFailure('Failed to load todos: ${e.toString()}');
+      throw DatabaseFailure('Failed to load todos: $e');
     }
   }
 
@@ -84,7 +82,7 @@ class TodoRepositoryImpl implements TodoRepository {
     } on IsarError catch (e) {
       return (false, DatabaseFailure(e.message));
     } catch (e) {
-      return (false, DatabaseFailure('Unexpected error: ${e.toString()}'));
+      return (false, DatabaseFailure('Unexpected error: $e'));
     }
   }
 
@@ -110,7 +108,7 @@ class TodoRepositoryImpl implements TodoRepository {
     } on IsarError catch (e) {
       return (false, DatabaseFailure(e.message));
     } catch (e) {
-      return (false, DatabaseFailure('Unexpected error: ${e.toString()}'));
+      return (false, DatabaseFailure('Unexpected error: $e'));
     }
   }
 
@@ -125,7 +123,7 @@ class TodoRepositoryImpl implements TodoRepository {
     } on IsarError catch (e) {
       return (false, DatabaseFailure(e.message));
     } catch (e) {
-      return (false, DatabaseFailure('Unexpected error: ${e.toString()}'));
+      return (false, DatabaseFailure('Unexpected error: $e'));
     }
   }
 }

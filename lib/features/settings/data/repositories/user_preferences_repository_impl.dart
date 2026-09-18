@@ -47,9 +47,7 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
         .watchObject(userPreferencesSingletonId, fireImmediately: true)
         .map(_mapOrDefault)
         .handleError((Object error, StackTrace stack) {
-          throw DatabaseFailure(
-            'Failed to watch preferences: ${error.toString()}',
-          );
+          throw DatabaseFailure('Failed to watch preferences: $error');
         });
   }
 
@@ -64,7 +62,7 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
       );
       return _mapOrDefault(model);
     } catch (e) {
-      throw DatabaseFailure('Failed to load preferences: ${e.toString()}');
+      throw DatabaseFailure('Failed to load preferences: $e');
     }
   }
 
@@ -81,7 +79,7 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
     } on IsarError catch (e) {
       return (false, DatabaseFailure(e.message));
     } catch (e) {
-      return (false, DatabaseFailure('Unexpected error: ${e.toString()}'));
+      return (false, DatabaseFailure('Unexpected error: $e'));
     }
   }
 
@@ -98,7 +96,7 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
     } on IsarError catch (e) {
       return (false, DatabaseFailure(e.message));
     } catch (e) {
-      return (false, DatabaseFailure('Unexpected error: ${e.toString()}'));
+      return (false, DatabaseFailure('Unexpected error: $e'));
     }
   }
 }
