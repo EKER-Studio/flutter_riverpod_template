@@ -7,7 +7,13 @@ enum AppRoute {
   todoDetail('todos/:id', 'todo_detail'),
 
   /// User preferences and settings screen route.
-  settings('/settings', 'settings');
+  settings('/settings', 'settings'),
+
+  /// Open-source licenses screen route.
+  licenses('licenses', 'licenses'),
+
+  /// Privacy policy screen route.
+  privacyPolicy('privacy-policy', 'privacy_policy');
 
   const AppRoute(this.path, this.name);
 

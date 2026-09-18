@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../features/settings/presentation/screens/licenses_screen.dart';
+import '../../features/settings/presentation/screens/privacy_policy_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../../features/todos/presentation/screens/todo_screen.dart';
 import '../../features/todos/presentation/screens/todo_screen_detail.dart';
@@ -40,6 +42,20 @@ GoRouter appRouter(Ref ref) {
         name: AppRoute.settings.name,
         builder: (BuildContext context, GoRouterState state) =>
             const SettingsScreen(),
+        routes: [
+          GoRoute(
+            path: AppRoute.licenses.path,
+            name: AppRoute.licenses.name,
+            builder: (BuildContext context, GoRouterState state) =>
+                const LicensesScreen(),
+          ),
+          GoRoute(
+            path: AppRoute.privacyPolicy.path,
+            name: AppRoute.privacyPolicy.name,
+            builder: (BuildContext context, GoRouterState state) =>
+                const PrivacyPolicyScreen(),
+          ),
+        ],
       ),
     ],
     errorBuilder: (BuildContext context, GoRouterState state) {

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_boilerplate/core/router/app_router.dart';
 import 'package:flutter_riverpod_boilerplate/core/router/app_routes.dart';
 import 'package:flutter_riverpod_boilerplate/features/settings/data/providers/user_preferences_repository_provider.dart';
+import 'package:flutter_riverpod_boilerplate/features/settings/presentation/screens/licenses_screen.dart';
+import 'package:flutter_riverpod_boilerplate/features/settings/presentation/screens/privacy_policy_screen.dart';
 import 'package:flutter_riverpod_boilerplate/features/settings/presentation/screens/settings_screen.dart';
 import 'package:flutter_riverpod_boilerplate/features/todos/data/providers/todo_repository_provider.dart';
 import 'package:flutter_riverpod_boilerplate/features/todos/presentation/screens/todo_screen.dart';
@@ -71,6 +73,29 @@ void main() {
 
       expect(find.byType(SettingsScreen), findsOneWidget);
     });
+
+    testWidgets('Navigates to LicensesScreen on "/settings/licenses" route', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        createTestApp(initialLocation: '/settings/licenses'),
+      );
+      await tester.pump();
+
+      expect(find.byType(LicensesScreen), findsOneWidget);
+    });
+
+    testWidgets(
+      'Navigates to PrivacyPolicyScreen on "/settings/privacy-policy" route',
+      (tester) async {
+        await tester.pumpWidget(
+          createTestApp(initialLocation: '/settings/privacy-policy'),
+        );
+        await tester.pumpAndSettle();
+
+        expect(find.byType(PrivacyPolicyScreen), findsOneWidget);
+      },
+    );
 
     testWidgets('Navigates to TodoDetailScreen on "/todos/:id" route', (
       tester,

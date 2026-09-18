@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../../core/errors/failure.dart';
+import '../../../../core/presentation/extensions/failure_ui_extension.dart';
+import '../../../../core/presentation/utils/app_snackbar.dart';
+import '../../../../core/presentation/widgets/app_error_view.dart';
+import '../../../../core/presentation/widgets/app_loading_indicator.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/user_preferences.dart';
 import '../providers/user_preferences_notifier.dart';
+import '../widgets/components/custom_settings_tile.dart';
+import '../widgets/components/custom_settings_toggle.dart';
+import '../widgets/components/section_header.dart';
+import '../widgets/components/theme_selection_dialog.dart';
 
 /// Presentation widget rendering the user preferences and settings screen.
 ///
-/// Displays theme mode selectors and notification switches, allowing users to modify
-/// application settings backed by [userPreferencesProvider].
+/// Displays theme mode selectors, notification switches, and application information,
+/// backed by [userPreferencesProvider].
 class SettingsScreen extends ConsumerWidget {
   /// Creates a settings screen widget instance.
   const SettingsScreen({super.key});
@@ -22,105 +32,117 @@ class SettingsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.settingsTitle ?? 'Settings')),
       body: preferencesAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+        loading: () => const AppLoadingIndicator(),
+        error: (error, _) => AppErrorView(
+          message: error is Failure && l10n != null
+              ? error.toUserMessage(l10n)
+              : error.toString(),
+          retryLabel: l10n?.tryAgain ?? 'Try again',
+          onRetry: () => ref.invalidate(userPreferencesProvider),
+        ),
+        data: (preferences) => Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               children: [
-                Text(
-                  l10n?.failedToLoadSettings ?? 'Failed to load settings',
-                  style: Theme.of(context).textTheme.titleMedium,
-                  textAlign: TextAlign.center,
+                SectionHeader(label: l10n?.appearance ?? 'Appearance'),
+                CustomSettingsTile(
+                  icon: Icons.palette_outlined,
+                  title: l10n?.theme ?? 'Theme',
+                  valueText: _themeLabel(l10n, preferences.themeMode),
+                  onTap: () =>
+                      _showThemePicker(context, ref, preferences.themeMode),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  error is Failure ? error.userMessage : error.toString(),
-                  style: Theme.of(context).textTheme.bodySmall,
-                  textAlign: TextAlign.center,
+                const SizedBox(height: 12),
+                CustomSettingsToggle(
+                  icon: Icons.notifications_outlined,
+                  title: l10n?.notifications ?? 'Notifications',
+                  subtitle:
+                      l10n?.receivePushNotifications ??
+                      'Receive push notifications',
+                  value: preferences.isNotificationsEnabled,
+                  onChanged: (value) async {
+                    final (success, failure) = await ref
+                        .read(userPreferencesProvider.notifier)
+                        .updateNotificationsEnabled(value);
+                    if (!success && context.mounted) {
+                      AppSnackBar.show(
+                        context,
+                        message: failure != null && l10n != null
+                            ? failure.toUserMessage(l10n)
+                            : (l10n?.failedToUpdatePreferences ??
+                                  'Failed to update preferences'),
+                        type: SnackBarType.error,
+                      );
+                    }
+                  },
                 ),
-                const SizedBox(height: 16),
-                FilledButton(
-                  onPressed: () => ref.invalidate(userPreferencesProvider),
-                  child: Text(l10n?.tryAgain ?? 'Try again'),
+                const SizedBox(height: 12),
+                SectionHeader(label: l10n?.about ?? 'About'),
+                FutureBuilder<PackageInfo>(
+                  future: PackageInfo.fromPlatform(),
+                  builder: (context, snapshot) {
+                    final version = snapshot.data?.version ?? '1.0.0';
+                    return CustomSettingsTile(
+                      icon: Icons.info_outline,
+                      title: l10n?.version ?? 'Version',
+                      valueText: 'v$version',
+                      showChevron: false,
+                    );
+                  },
                 ),
+                CustomSettingsTile(
+                  icon: Icons.policy_outlined,
+                  title: l10n?.privacyPolicy ?? 'Privacy Policy',
+                  onTap: () => context.go('/settings/privacy-policy'),
+                ),
+                CustomSettingsTile(
+                  icon: Icons.code_rounded,
+                  title: l10n?.licenses ?? 'Licenses',
+                  onTap: () => context.go('/settings/licenses'),
+                ),
+                const SizedBox(height: 24),
               ],
             ),
           ),
-        ),
-        data: (preferences) => ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          children: [
-            SegmentedButton<UserThemeMode>(
-              segments: [
-                ButtonSegment<UserThemeMode>(
-                  value: UserThemeMode.system,
-                  icon: const Icon(Icons.brightness_auto_outlined),
-                  label: Text(l10n?.themeSystem ?? 'System'),
-                ),
-                ButtonSegment<UserThemeMode>(
-                  value: UserThemeMode.light,
-                  icon: const Icon(Icons.light_mode_outlined),
-                  label: Text(l10n?.themeLight ?? 'Light'),
-                ),
-                ButtonSegment<UserThemeMode>(
-                  value: UserThemeMode.dark,
-                  icon: const Icon(Icons.dark_mode_outlined),
-                  label: Text(l10n?.themeDark ?? 'Dark Mode'),
-                ),
-              ],
-              selected: {preferences.themeMode},
-              onSelectionChanged: (selection) =>
-                  _updateThemeMode(context, ref, selection.single),
-            ),
-            const Divider(height: 24),
-            SwitchListTile(
-              title: Text(l10n?.notifications ?? 'Notifications'),
-              secondary: const Icon(Icons.notifications_outlined),
-              value: preferences.isNotificationsEnabled,
-              onChanged: (value) async {
-                final (success, failure) = await ref
-                    .read(userPreferencesProvider.notifier)
-                    .updateNotificationsEnabled(value);
-                if (!success && context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        failure?.userMessage ??
-                            (l10n?.failedToUpdatePreferences ??
-                                'Failed to update preferences'),
-                      ),
-                    ),
-                  );
-                }
-              },
-            ),
-          ],
         ),
       ),
     );
   }
 
-  Future<void> _updateThemeMode(
+  void _showThemePicker(
     BuildContext context,
     WidgetRef ref,
-    UserThemeMode value,
-  ) async {
-    final (success, failure) = await ref
-        .read(userPreferencesProvider.notifier)
-        .updateThemeMode(value);
-    if (!success && context.mounted) {
-      final l10n = AppLocalizations.of(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            failure?.userMessage ??
-                (l10n?.failedToUpdateThemeMode ??
-                    'Failed to update theme mode'),
-          ),
-        ),
-      );
-    }
+    UserThemeMode current,
+  ) {
+    ThemeSelectionDialog.show(
+      context,
+      currentMode: current,
+      onSelected: (mode) async {
+        final (success, failure) = await ref
+            .read(userPreferencesProvider.notifier)
+            .updateThemeMode(mode);
+        if (!success && context.mounted) {
+          final l10n = AppLocalizations.of(context);
+          AppSnackBar.show(
+            context,
+            message: failure != null && l10n != null
+                ? failure.toUserMessage(l10n)
+                : (l10n?.failedToUpdateThemeMode ??
+                      'Failed to update theme mode'),
+            type: SnackBarType.error,
+          );
+        }
+      },
+    );
+  }
+
+  String _themeLabel(AppLocalizations? l10n, UserThemeMode mode) {
+    return switch (mode) {
+      UserThemeMode.light => l10n?.themeLight ?? 'Light',
+      UserThemeMode.dark => l10n?.themeDark ?? 'Dark Mode',
+      UserThemeMode.system => l10n?.themeSystem ?? 'System',
+    };
   }
 }

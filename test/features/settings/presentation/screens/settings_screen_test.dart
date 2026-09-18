@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter_riverpod_boilerplate/features/settings/domain/entities/user_preferences.dart';
 import 'package:flutter_riverpod_boilerplate/features/settings/data/providers/user_preferences_repository_provider.dart';
+import 'package:flutter_riverpod_boilerplate/features/settings/domain/entities/user_preferences.dart';
 import 'package:flutter_riverpod_boilerplate/features/settings/presentation/screens/settings_screen.dart';
 import 'package:flutter_riverpod_boilerplate/l10n/app_localizations.dart';
 
@@ -20,37 +20,45 @@ void main() {
     repository.dispose();
   });
 
-  testWidgets('Settings screen updates theme mode and notifications', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          userPreferencesRepositoryProvider.overrideWithValue(repository),
-        ],
-        child: const MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: SettingsScreen(),
+  testWidgets(
+    'Settings screen renders and updates theme mode and notifications',
+    (tester) async {
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            userPreferencesRepositoryProvider.overrideWithValue(repository),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: SettingsScreen(),
+          ),
         ),
-      ),
-    );
+      );
 
-    await tester.pumpAndSettle();
+      await tester.pumpAndSettle();
 
-    expect(find.text('System'), findsOneWidget);
-    expect(find.text('Light'), findsOneWidget);
-    expect(find.text('Dark Mode'), findsOneWidget);
-    expect(find.text('Notifications'), findsOneWidget);
+      expect(find.text('Settings'), findsOneWidget);
+      expect(find.text('System'), findsOneWidget);
+      expect(find.text('Notifications'), findsOneWidget);
+      expect(find.text('Appearance'), findsOneWidget);
+      expect(find.text('About'), findsOneWidget);
+      expect(find.text('Privacy Policy'), findsOneWidget);
+      expect(find.text('Licenses'), findsOneWidget);
 
-    await tester.tap(find.text('Dark Mode'));
-    await tester.pumpAndSettle();
+      await tester.tap(find.text('Theme'));
+      await tester.pumpAndSettle();
 
-    expect((await repository.get()).themeMode, UserThemeMode.dark);
+      expect(find.text('Dark Mode'), findsOneWidget);
+      await tester.tap(find.text('Dark Mode'));
+      await tester.pumpAndSettle();
 
-    await tester.tap(find.byType(SwitchListTile));
-    await tester.pumpAndSettle();
+      expect((await repository.get()).themeMode, UserThemeMode.dark);
 
-    expect((await repository.get()).isNotificationsEnabled, isFalse);
-  });
+      await tester.tap(find.byType(Switch));
+      await tester.pumpAndSettle();
+
+      expect((await repository.get()).isNotificationsEnabled, isFalse);
+    },
+  );
 }
