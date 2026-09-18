@@ -25,7 +25,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.47.2'
+          flutter-version-file: .flutter-version
 
       - name: Cache Flutter dependencies
         uses: actions/cache@v4
@@ -34,6 +34,16 @@ jobs:
           key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-pub-
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Install dependencies
         run: flutter pub get
@@ -59,7 +69,11 @@ jobs:
         run: dart run build_runner build --delete-conflicting-outputs
 
       - name: Check formatting
-        run: dart format --set-exit-if-changed lib test
+        run: |
+          FORMAT_DIRS="lib test"
+          [ -d "integration_test" ] && FORMAT_DIRS="$FORMAT_DIRS integration_test"
+          [ -d "test_driver" ] && FORMAT_DIRS="$FORMAT_DIRS test_driver"
+          dart format --set-exit-if-changed $FORMAT_DIRS
 
       - name: Static analysis
         run: flutter analyze
@@ -69,6 +83,9 @@ jobs:
 
       - name: Run unit and widget tests
         run: flutter test --coverage --exclude-tags "golden,screenshot"
+
+      - name: Build Android Debug APK
+        run: flutter build apk --debug
 
       - name: Generate Coverage Job Summary
         if: always()
