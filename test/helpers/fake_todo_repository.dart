@@ -29,6 +29,14 @@ class FakeTodoRepository implements TodoRepository {
     _streamController.add(List.unmodifiable(_todos));
   }
 
+  /// Current unmodifiable snapshot of todos stored in the fake repository.
+  List<Todo> get currentTodos => List.unmodifiable(_todos);
+
+  /// Emits an error event through the watch stream for error testing.
+  void emitError(Object error) {
+    _streamController.addError(error);
+  }
+
   /// Releases the internal stream resources. Call in [tearDown].
   void dispose() {
     _streamController.close();

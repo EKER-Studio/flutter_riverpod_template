@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
+import '../shared/format.dart';
 
 import '../../../../core/errors/failure.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -62,8 +62,6 @@ class TodoDetailScreen extends ConsumerWidget {
             );
           }
 
-          final dateFormat = DateFormat('yyyy-MM-dd HH:mm');
-
           return ListView(
             padding: const EdgeInsets.all(16),
             children: [
@@ -92,7 +90,7 @@ class TodoDetailScreen extends ConsumerWidget {
                 context,
                 icon: Icons.calendar_today,
                 label: l10n?.createdAtLabel ?? 'Created at',
-                value: dateFormat.format(todo.createdAt),
+                value: formatTodoDate(todo.createdAt),
               ),
             ],
           );

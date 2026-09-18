@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
+import '../shared/format.dart';
 
 import '../../../../core/router/app_routes.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -79,14 +79,10 @@ class TodoListItem extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          _dateFormat.format(todo.createdAt),
+          formatTodoDate(todo.createdAt),
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ),
     );
   }
 }
-
-/// Shared date format for displaying [Todo.createdAt], kept consistent with
-/// [TodoDetailScreen].
-final _dateFormat = DateFormat('yyyy-MM-dd HH:mm');
