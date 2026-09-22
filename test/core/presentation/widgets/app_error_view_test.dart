@@ -34,10 +34,10 @@ void main() {
 
     testWidgets('does not render button when onRetry is null', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: const Scaffold(body: AppErrorView(message: 'Something broke')),
+          home: Scaffold(body: AppErrorView(message: 'Something broke')),
         ),
       );
 

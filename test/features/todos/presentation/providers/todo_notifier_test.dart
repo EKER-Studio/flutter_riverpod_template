@@ -194,9 +194,9 @@ void main() {
     test(
       'returns error record when repository.add fails and state remains AsyncData',
       () async {
-        when(
-          () => mockRepo.add(title: any(named: 'title')),
-        ).thenAnswer((_) async => (false, DatabaseFailure('Database error')));
+        when(() => mockRepo.add(title: any(named: 'title'))).thenAnswer(
+          (_) async => (false, const DatabaseFailure('Database error')),
+        );
 
         container = _makeContainer(mockRepo);
         container.listen(todoListProvider, (_, _) {});
@@ -239,9 +239,9 @@ void main() {
     test(
       'returns error record when repository.toggleCompleted fails and state remains AsyncData',
       () async {
-        when(
-          () => mockRepo.toggleCompleted(id: any(named: 'id')),
-        ).thenAnswer((_) async => (false, DatabaseFailure('Database error')));
+        when(() => mockRepo.toggleCompleted(id: any(named: 'id'))).thenAnswer(
+          (_) async => (false, const DatabaseFailure('Database error')),
+        );
 
         container = _makeContainer(mockRepo);
         container.listen(todoListProvider, (_, _) {});
@@ -284,9 +284,9 @@ void main() {
     test(
       'returns error record when repository.delete fails and state remains AsyncData',
       () async {
-        when(
-          () => mockRepo.delete(id: any(named: 'id')),
-        ).thenAnswer((_) async => (false, DatabaseFailure('Database error')));
+        when(() => mockRepo.delete(id: any(named: 'id'))).thenAnswer(
+          (_) async => (false, const DatabaseFailure('Database error')),
+        );
 
         container = _makeContainer(mockRepo);
         container.listen(todoListProvider, (_, _) {});

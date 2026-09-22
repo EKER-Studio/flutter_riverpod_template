@@ -146,9 +146,9 @@ void main() {
     test(
       'returns error record when updateThemeMode fails and state remains AsyncData',
       () async {
-        when(
-          () => mockRepo.updateThemeMode(UserThemeMode.light),
-        ).thenAnswer((_) async => (false, DatabaseFailure('Database error')));
+        when(() => mockRepo.updateThemeMode(UserThemeMode.light)).thenAnswer(
+          (_) async => (false, const DatabaseFailure('Database error')),
+        );
 
         container = _makeContainer(mockRepo);
         container.listen(userPreferencesProvider, (_, _) {});
