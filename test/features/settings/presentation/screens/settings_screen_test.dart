@@ -45,6 +45,7 @@ void main() {
       expect(find.text('About'), findsOneWidget);
       expect(find.text('Privacy Policy'), findsOneWidget);
       expect(find.text('Licenses'), findsOneWidget);
+      expect(find.text('Rate App'), findsOneWidget);
 
       await tester.tap(find.text('Theme'));
       await tester.pumpAndSettle();
