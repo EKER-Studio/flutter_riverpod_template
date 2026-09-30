@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-09-30
+
+### Release v1.4.0 — Android 15 Alignment, Store Rating & Modular DX Tooling
+
+Targeted milestone release modernizing Android 15 system bar behaviors, future-proofing SDK 37 compilation, adding in-app store review routing, streamlining strict linter rules, and introducing modular screenshot test automation.
+
+Compare: [`v1.3.0...v1.4.0`](https://github.com/EKER-Studio/flutter_riverpod_template/compare/v1.3.0...v1.4.0)
+
+#### 🚀 Highlights & Features
+
+* **Android 15 & Gradle Modernization:**
+  * Configured `compileSdk = maxOf(flutter.compileSdkVersion, 37)` in `android/app/build.gradle.kts` to ensure out-of-the-box compatibility with modern AndroidX plugins and SDK 37 requirements.
+  * Configured R8 full mode, resource optimizations, and non-transitive R class generation (`android.enableR8.fullMode=true`, `android.enableResourceOptimizations=true`, `android.nonTransitiveRClass=true`) in `android/gradle.properties`.
+  * Removed deprecated `android:windowLayoutInDisplayCutoutMode="shortEdges"` across all `styles.xml` themes to ensure seamless native edge-to-edge system bar handling on Android 15 (API 35).
+
+* **Linter, Code Quality & Const Optimization:**
+  * Cleaned up 20+ redundant lint rules in `analysis_options.yaml` already included by `package:flutter_lints/flutter.yaml`.
+  * Enforced strict const optimizations (`prefer_const_constructors`, `prefer_const_literals_to_create_immutables`, `prefer_const_declarations`) and unawaited async safety (`avoid_void_async`, `no_adjacent_strings_in_list`, `throw_in_finally`).
+  * Updated test suites to satisfy const immutability standards.
+
+* **Settings & Store Readiness:**
+  * Added "Rate App" tile to `SettingsScreen` with dynamic `packageName` resolution from `PackageInfo` and store launch with fallback handling.
+  * Localized rate app actions and error messaging across English and Polish ARB catalogs.
+
+* **Modular Screenshot Automation:**
+  * Modularized screenshot runners with dedicated per-feature target scripts (`generate_todos.sh`, `generate_settings.sh`).
+  * Upgraded `generate_screenshots.sh` orchestrator supporting target delegation, device selection, and test suite execution summary.
+
+* **UI & Adaptive Scaffolding:**
+  * Integrated adaptive navigation scaffold supporting phones, tablets, and desktop layouts.
+  * Centralized date formatting utilities in todo presentation layer.
+
 ## [1.3.0] - 2026-09-18
 
 ### Release v1.3.0 — Production Hardening, Store Readiness & DX Optimization
@@ -95,6 +127,8 @@ Compare: [`v1.2.0...v1.3.0`](https://github.com/EKER-Studio/flutter_riverpod_boi
 * Integrated localization (l10n) blueprint with English and Polish translations.
 * Complete verification pipeline with unit, widget, and golden test coverage.
 
-[1.2.0]: https://github.com/EKER-Studio/flutter_riverpod_boilerplate/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/EKER-Studio/flutter_riverpod_boilerplate/compare/v1.0.0...v1.1.0
-[1.0.0]: https://github.com/EKER-Studio/flutter_riverpod_boilerplate/releases/tag/v1.0.0
+[1.4.0]: https://github.com/EKER-Studio/flutter_riverpod_template/compare/v1.3.0...v1.4.0
+[1.3.0]: https://github.com/EKER-Studio/flutter_riverpod_template/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/EKER-Studio/flutter_riverpod_template/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/EKER-Studio/flutter_riverpod_template/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/EKER-Studio/flutter_riverpod_template/releases/tag/v1.0.0

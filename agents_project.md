@@ -1,4 +1,4 @@
-# Project-Specific Rules — flutter_riverpod_boilerplate (v1.3.0)
+# Project-Specific Rules — flutter_riverpod_boilerplate (v1.4.0)
 
 *Companion to `AGENTS.md`. Save this file as `agents_project.md` in this repo's root, next to `AGENTS.md`.
 Frozen strictly around 3 pillars: Clean Architecture, Riverpod 3.x, and Isar Community, with an integrated
@@ -16,7 +16,7 @@ minimal l10n blueprint.*
 | `flutter analyze` | Static analysis across the workspace |
 | `dart run custom_lint` | Riverpod-specific architectural lint checks |
 | `flutter test` | Run tests (`--exclude-tags "golden,screenshot"` for CI/fast runs) |
-| `./scripts/screenshots/generate_screenshots.sh [phone\|tablet_7\|tablet_10\|all] [locale]` | Automated App Store / Play Store screenshot capture |
+| `./scripts/screenshots/generate_screenshots.sh [target\|device] [device\|locale] [locale]` | Automated App Store / Play Store screenshot capture |
 | `bash scripts/before_push.sh` | Full pre-push verification pipeline |
 
 ### Architecture & Layer Boundaries
